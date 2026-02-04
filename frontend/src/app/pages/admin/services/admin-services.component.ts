@@ -75,7 +75,7 @@ import { FormsModule } from '@angular/forms';
                                 <span class="material-symbols-outlined text-[10px]">chevron_right</span>
                                 <span class="text-luxe-text font-medium">Services</span>
                             </nav>
-                            <h1 class="text-3xl md:text-4xl font-black text-luxe-text dark:text-white tracking-tight leading-tight">Service Catalog Management</h1>
+                            <h1 class="text-3xl md:text-4xl font-serif font-black text-luxe-text dark:text-white tracking-tight leading-tight">Service Catalog Management</h1>
                             <p class="text-service-text-sub dark:text-gray-400 text-base md:text-lg max-w-2xl">Manage your salon's service offerings, pricing, and durations to keep your menu fresh and up-to-date.</p>
                         </div>
                         <div class="flex gap-3">
@@ -98,7 +98,7 @@ import { FormsModule } from '@angular/forms';
                                 <span class="material-symbols-outlined text-4xl">add</span>
                             </div>
                             <div>
-                                <h3 class="text-lg font-bold text-service-rose-gold group-hover:text-service-primary transition-colors">Add New Service</h3>
+                                <h3 class="text-lg font-serif font-bold text-service-rose-gold group-hover:text-service-primary transition-colors">Add New Service</h3>
                                 <p class="text-sm text-service-text-sub mt-1 px-4">Create a new offering for your clients</p>
                             </div>
                         </div>

@@ -18,7 +18,7 @@ import { ArtistFooterComponent } from './components/artist-footer/artist-footer.
     template: `
     <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden font-display bg-background-light dark:bg-background-dark text-text-main">
         <app-landing-header></app-landing-header>
-        <main class="flex-1 bg-accent-nude dark:bg-background-dark/50 p-0 pt-32">
+        <main class="flex-1 p-0 pt-32 w-full">
              <app-artist-hero></app-artist-hero>
              <app-artist-grid></app-artist-grid>
              <div class="h-20"></div> <!-- Spacer to ensure grid padding bottom -->

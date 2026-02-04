@@ -4,8 +4,27 @@
 
 /* Custom Styles */
 body {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
     /* Debug removed: background-color: #f0f0f0; */
+}
+
+/* Force override if Tailwind config fails */
+.font-serif {
+    font-family: 'Playfair Display', serif !important;
+}
+
+.font-display {
+    font-family: 'Manrope', sans-serif !important;
+}
+
+/* Global Heading Style Enforcement */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Playfair Display', serif !important;
 }
 
 .glass-card {

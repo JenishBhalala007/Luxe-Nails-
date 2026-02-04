@@ -63,7 +63,7 @@ import { CommonModule } from '@angular/common';
         <main class="flex-1 flex flex-col h-full overflow-hidden relative">
             <!-- Top Header -->
             <header class="h-20 flex items-center justify-between px-10 bg-white/50 backdrop-blur-sm sticky top-0 z-10">
-                <h2 class="text-2xl font-bold text-luxe-text tracking-tight">Admin Overview</h2>
+                <h2 class="text-2xl font-serif font-bold text-luxe-text tracking-tight">Admin Overview</h2>
                 <div class="flex items-center gap-6">
                     <!-- Search -->
                     <div class="relative w-64 hidden md:block">
@@ -96,7 +96,7 @@ import { CommonModule } from '@angular/common';
                         <div class="bg-white p-6 rounded-xl shadow-card flex items-start justify-between group hover:-translate-y-1 transition-transform duration-300">
                             <div class="flex flex-col gap-2">
                                 <p class="text-luxe-text-muted text-sm font-medium">Total Revenue</p>
-                                <p class="text-2xl font-bold text-luxe-text">₹45,000</p>
+                                <p class="text-2xl font-serif font-bold text-luxe-text">₹45,000</p>
                                 <div class="flex items-center gap-1 text-[#078859] text-xs font-semibold bg-[#e6f4ed] w-fit px-2 py-1 rounded-lg">
                                     <span class="material-symbols-outlined text-[14px]">trending_up</span>
                                     <span>+12%</span>
@@ -110,7 +110,7 @@ import { CommonModule } from '@angular/common';
                         <div class="bg-white p-6 rounded-xl shadow-card flex items-start justify-between group hover:-translate-y-1 transition-transform duration-300">
                             <div class="flex flex-col gap-2">
                                 <p class="text-luxe-text-muted text-sm font-medium">Total Bookings</p>
-                                <p class="text-2xl font-bold text-luxe-text">128</p>
+                                <p class="text-2xl font-serif font-bold text-luxe-text">128</p>
                                 <div class="flex items-center gap-1 text-[#078859] text-xs font-semibold bg-[#e6f4ed] w-fit px-2 py-1 rounded-lg">
                                     <span class="material-symbols-outlined text-[14px]">trending_up</span>
                                     <span>+5%</span>
@@ -124,7 +124,7 @@ import { CommonModule } from '@angular/common';
                         <div class="bg-white p-6 rounded-xl shadow-card flex items-start justify-between group hover:-translate-y-1 transition-transform duration-300">
                             <div class="flex flex-col gap-2">
                                 <p class="text-luxe-text-muted text-sm font-medium">Active Workers</p>
-                                <p class="text-2xl font-bold text-luxe-text">8</p>
+                                <p class="text-2xl font-serif font-bold text-luxe-text">8</p>
                                 <div class="flex items-center gap-1 text-luxe-text-muted text-xs font-semibold bg-gray-100 w-fit px-2 py-1 rounded-lg">
                                     <span class="material-symbols-outlined text-[14px]">remove</span>
                                     <span>0%</span>
@@ -138,7 +138,7 @@ import { CommonModule } from '@angular/common';
                         <div class="bg-white p-6 rounded-xl shadow-card flex items-start justify-between group hover:-translate-y-1 transition-transform duration-300">
                             <div class="flex flex-col gap-2">
                                 <p class="text-luxe-text-muted text-sm font-medium">Pending Actions</p>
-                                <p class="text-2xl font-bold text-luxe-text">5</p>
+                                <p class="text-2xl font-serif font-bold text-luxe-text">5</p>
                                 <div class="flex items-center gap-1 text-[#078859] text-xs font-semibold bg-[#e6f4ed] w-fit px-2 py-1 rounded-lg">
                                     <span class="material-symbols-outlined text-[14px]">trending_up</span>
                                     <span>+2%</span>
@@ -156,7 +156,7 @@ import { CommonModule } from '@angular/common';
                         <div class="flex-1 lg:w-[60%] bg-white p-8 rounded-xl shadow-card flex flex-col">
                             <div class="flex items-center justify-between mb-6">
                                 <div>
-                                    <h3 class="text-lg font-bold text-luxe-text">Revenue Curve</h3>
+                                    <h3 class="text-lg font-serif font-bold text-luxe-text">Revenue Curve</h3>
                                     <p class="text-sm text-luxe-text-muted">Sales performance over last 7 days</p>
                                 </div>
                                 <button class="p-2 rounded-lg hover:bg-gray-50 text-luxe-text-muted">
@@ -205,7 +205,7 @@ import { CommonModule } from '@angular/common';
                         <div class="flex-1 lg:w-[40%] bg-white p-8 rounded-xl shadow-card flex flex-col">
                             <div class="flex items-center justify-between mb-6">
                                 <div>
-                                    <h3 class="text-lg font-bold text-luxe-text">Top Services</h3>
+                                    <h3 class="text-lg font-serif font-bold text-luxe-text">Top Services</h3>
                                     <p class="text-sm text-luxe-text-muted">Most popular treatments</p>
                                 </div>
                             </div>
@@ -257,7 +257,7 @@ import { CommonModule } from '@angular/common';
                     <!-- Recent Activity Table -->
                     <div class="bg-white rounded-xl shadow-card overflow-hidden">
                         <div class="p-6 border-b border-[#f0e6e9] flex justify-between items-center">
-                            <h3 class="text-lg font-bold text-luxe-text">Live Activity Feed</h3>
+                            <h3 class="text-lg font-serif font-bold text-luxe-text">Live Activity Feed</h3>
                             <button class="text-sm text-primary font-bold hover:underline">View All</button>
                         </div>
                         <div class="overflow-x-auto">
