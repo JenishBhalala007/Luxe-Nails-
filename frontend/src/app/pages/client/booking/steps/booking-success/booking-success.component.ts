@@ -53,7 +53,7 @@ import { RouterLink } from '@angular/router';
                 </div>
                 <div class="mt-8 pt-4 border-t border-dashed border-[#e7cfd3] dark:border-white/10 flex justify-between items-center">
                     <span class="text-sm text-[#1b0d10]/60 dark:text-white/60">Total Estimated</span>
-                    <span class="text-xl font-bold text-primary">$85.00</span>
+                    <span class="text-xl font-bold text-primary">₹85.00</span>
                 </div>
             </div>
 

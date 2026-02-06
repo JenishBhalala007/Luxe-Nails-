@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
                     <div>
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-xl font-bold text-text-main dark:text-white">Classic Gel Manicure</h3>
-                            <span class="text-primary-bold font-bold text-lg">$55</span>
+                            <span class="text-primary-bold font-bold text-lg">₹55</span>
                         </div>
                         <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm mb-3 font-medium">
                             <span class="material-symbols-outlined text-[16px]">schedule</span>
@@ -40,7 +40,7 @@ import { CommonModule } from '@angular/common';
                     <div>
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-xl font-bold text-text-main dark:text-white">Sculpted Acrylics</h3>
-                            <span class="text-primary-bold font-bold text-lg">$85</span>
+                            <span class="text-primary-bold font-bold text-lg">₹85</span>
                         </div>
                         <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm mb-3 font-medium">
                             <span class="material-symbols-outlined text-[16px]">schedule</span>
@@ -65,7 +65,7 @@ import { CommonModule } from '@angular/common';
                     <div>
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-xl font-bold text-text-main dark:text-white">Intricate Nail Art</h3>
-                            <span class="text-primary-bold font-bold text-lg">+$20</span>
+                            <span class="text-primary-bold font-bold text-lg">+₹20</span>
                         </div>
                         <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm mb-3 font-medium">
                             <span class="material-symbols-outlined text-[16px]">schedule</span>
@@ -90,7 +90,7 @@ import { CommonModule } from '@angular/common';
                     <div>
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-xl font-bold text-text-main dark:text-white">Luxury Spa Pedicure</h3>
-                            <span class="text-primary-bold font-bold text-lg">$75</span>
+                            <span class="text-primary-bold font-bold text-lg">₹75</span>
                         </div>
                         <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm mb-3 font-medium">
                             <span class="material-symbols-outlined text-[16px]">schedule</span>
@@ -115,7 +115,7 @@ import { CommonModule } from '@angular/common';
                     <div>
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-xl font-bold text-text-main dark:text-white">Hard Gel Overlay</h3>
-                            <span class="text-primary-bold font-bold text-lg">$65</span>
+                            <span class="text-primary-bold font-bold text-lg">₹65</span>
                         </div>
                         <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm mb-3 font-medium">
                             <span class="material-symbols-outlined text-[16px]">schedule</span>
@@ -140,7 +140,7 @@ import { CommonModule } from '@angular/common';
                     <div>
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-xl font-bold text-text-main dark:text-white">Gel Removal</h3>
-                            <span class="text-primary-bold font-bold text-lg">$15</span>
+                            <span class="text-primary-bold font-bold text-lg">₹15</span>
                         </div>
                         <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm mb-3 font-medium">
                             <span class="material-symbols-outlined text-[16px]">schedule</span>

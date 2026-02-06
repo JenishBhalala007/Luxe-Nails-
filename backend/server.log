@@ -1,0 +1,735 @@
+2026-02-06T08:53:52.798Z - GET /api/auth/me
+2026-02-06T08:53:56.714Z - GET /api/appointments/my
+2026-02-06T08:54:36.741Z - GET /api/auth/me
+2026-02-06T08:54:36.754Z - GET /api/appointments/my
+2026-02-06T08:54:40.179Z - GET /api/services
+2026-02-06T08:54:42.773Z - GET /api/artists
+2026-02-06T08:54:53.130Z - POST /api/appointments
+2026-02-06T08:57:27.840Z - GET /api/services
+2026-02-06T08:57:30.550Z - GET /api/artists
+2026-02-06T08:58:00.896Z - POST /api/appointments
+2026-02-06T08:58:35.347Z - GET /api/appointments/my
+2026-02-06T08:58:37.388Z - GET /api/appointments/my
+2026-02-06T08:58:37.393Z - GET /api/auth/me
+2026-02-06T08:58:39.034Z - GET /api/appointments/my
+2026-02-06T08:58:42.638Z - GET /api/appointments/my
+2026-02-06T08:58:46.678Z - GET /api/appointments/my
+2026-02-06T08:58:47.343Z - GET /api/appointments/my
+2026-02-06T08:58:49.584Z - GET /api/appointments/my
+2026-02-06T08:58:49.988Z - GET /api/appointments/my
+2026-02-06T08:58:50.551Z - GET /api/appointments/my
+2026-02-06T08:59:01.911Z - POST /api/auth/login
+2026-02-06T08:59:04.788Z - GET /api/appointments/my
+2026-02-06T08:59:06.445Z - GET /api/appointments/my
+2026-02-06T08:59:07.582Z - GET /api/appointments/my
+2026-02-06T08:59:08.745Z - GET /api/appointments/my
+2026-02-06T08:59:12.050Z - GET /api/appointments/my
+2026-02-06T08:59:17.720Z - GET /api/auth/me
+2026-02-06T08:59:17.728Z - GET /api/appointments/my
+2026-02-06T08:59:20.794Z - GET /api/appointments/my
+2026-02-06T09:09:47.946Z - POST /api/auth/login
+2026-02-06T09:09:53.583Z - GET /api/appointments/my
+2026-02-06T09:09:59.984Z - GET /api/appointments/my
+2026-02-06T09:10:02.449Z - GET /api/appointments/my
+2026-02-06T09:10:03.442Z - GET /api/appointments/my
+2026-02-06T09:10:10.168Z - GET /api/services
+2026-02-06T09:10:13.165Z - GET /api/artists
+2026-02-06T09:10:22.609Z - POST /api/appointments
+2026-02-06T09:15:42.780Z - GET /api/services
+2026-02-06T09:15:48.669Z - GET /api/auth/me
+Auth: Protect middleware triggered
+2026-02-06T09:15:48.685Z - GET /api/services
+2026-02-06T09:15:52.733Z - GET /api/artists
+2026-02-06T09:16:03.838Z - POST /api/appointments
+Route: POST /api/appointments hit
+Auth: Protect middleware triggered
+2026-02-06T09:16:44.866Z - POST /api/auth/login
+2026-02-06T09:16:49.781Z - GET /api/auth/me
+Auth: Protect middleware triggered
+2026-02-06T09:17:06.887Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+2026-02-06T09:21:55.053Z - POST /api/auth/login
+2026-02-06T09:22:20.537Z - GET /api/services
+2026-02-06T09:22:27.574Z - GET /api/artists
+2026-02-06T09:22:54.062Z - POST /api/appointments
+Route: POST /api/appointments hit
+Auth: Protect middleware triggered
+Auth: Header present
+2026-02-06T09:23:41.178Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+2026-02-06T09:24:27.003Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+2026-02-06T09:27:08.493Z - POST /api/auth/login
+2026-02-06T09:27:12.803Z - GET /api/services
+2026-02-06T09:27:17.835Z - GET /api/artists
+2026-02-06T09:27:30.167Z - POST /api/appointments
+Route: POST /api/appointments hit
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Verification Failed. Error: jwt is not defined
+2026-02-06T09:27:52.982Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Verification Failed. Error: jwt is not defined
+2026-02-06T09:28:07.387Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Verification Failed. Error: jwt is not defined
+2026-02-06T09:28:13.349Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: No Auth Header. Headers: {"host":"127.0.0.1:5000","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0","accept":"application/json, text/plain, */*","accept-language":"en-US,en;q=0.9","accept-encoding":"gzip, deflate, br, zstd","origin":"http://localhost:4200","connection":"keep-alive","referer":"http://localhost:4200/","sec-fetch-dest":"empty","sec-fetch-mode":"cors","sec-fetch-site":"cross-site"}
+Auth: Token is undefined, sending 401
+2026-02-06T09:31:20.835Z - POST /api/auth/login
+2026-02-06T09:31:24.498Z - GET /api/services
+2026-02-06T09:31:30.002Z - GET /api/artists
+2026-02-06T09:31:43.669Z - POST /api/appointments
+Route: POST /api/appointments hit
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+CreateAppt: Request received. Artist: null, Date: 2026-02-10
+CreateAppt: Error Appointment is not defined
+2026-02-06T09:32:27.723Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:32:31.012Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:32:35.580Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:32:41.003Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:32:42.265Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:32:43.791Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:32:48.386Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:32:50.137Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:32:53.913Z - GET /api/services
+2026-02-06T09:32:56.990Z - GET /api/artists
+2026-02-06T09:33:10.322Z - POST /api/appointments
+Route: POST /api/appointments hit
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+CreateAppt: Request received. Artist: null, Date: 2026-02-10
+CreateAppt: Error Appointment is not defined
+2026-02-06T09:38:10.118Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:38:13.056Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:38:16.825Z - GET /api/services
+2026-02-06T09:38:19.513Z - GET /api/artists
+2026-02-06T09:38:28.548Z - POST /api/appointments
+Route: POST /api/appointments hit
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+CreateAppt: Request received. Artist: null, Date: 2026-02-10
+CreateAppt: Creating DB entry...
+CreateAppt: Success 6985b694e9dcea40b8ee9157
+2026-02-06T09:38:28.617Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:38:33.202Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:38:39.014Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:38:39.031Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:38:40.140Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:38:41.486Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:38:45.290Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:38:45.969Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:38:47.051Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:45:59.237Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:45:59.249Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:46:01.164Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+2026-02-06T09:46:01.169Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+Auth: User attached to req
+2026-02-06T09:46:14.442Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+2026-02-06T09:46:14.446Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+Auth: User attached to req
+2026-02-06T09:48:03.576Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:03.590Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:05.801Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:09.245Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:09.259Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:09.707Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:09.987Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:11.335Z - GET /api/services
+2026-02-06T09:48:12.907Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:15.036Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:19.769Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:26.208Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:29.709Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:31.478Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:48:39.102Z - POST /api/auth/login
+2026-02-06T09:48:41.896Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:49:04.614Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:49:19.064Z - GET /api/services
+2026-02-06T09:49:21.274Z - GET /api/artists
+2026-02-06T09:49:32.001Z - POST /api/appointments
+Route: POST /api/appointments hit
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+CreateAppt: Request received. Artist: null, Date: 2026-02-10
+CreateAppt: Slot blocked
+2026-02-06T09:50:31.904Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:50:36.771Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:50:42.960Z - GET /api/services
+2026-02-06T09:50:48.400Z - GET /api/artists
+2026-02-06T09:51:28.508Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:51:33.438Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:51:35.121Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:53:16.159Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:53:16.164Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:54:47.745Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:54:47.759Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:54:53.980Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:54:58.789Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:55:08.111Z - POST /api/auth/login
+2026-02-06T09:55:08.289Z - POST /api/auth/login
+2026-02-06T09:55:13.495Z - GET /api/services
+2026-02-06T09:55:17.597Z - GET /api/artists
+2026-02-06T09:55:26.926Z - POST /api/appointments
+Route: POST /api/appointments hit
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+CreateAppt: Request received. Artist: null, Date: 2026-02-10
+CreateAppt: Slot blocked
+2026-02-06T09:57:12.344Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:57:39.141Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:58:09.524Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:59:40.742Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T09:59:42.738Z - GET /api/services
+2026-02-06T09:59:45.265Z - GET /api/artists
+2026-02-06T09:59:55.479Z - POST /api/appointments
+Route: POST /api/appointments hit
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+CreateAppt: Request received. Artist: null, Date: 2026-02-11
+CreateAppt: Creating DB entry...
+CreateAppt: Success 6985bb9be9dcea40b8ee91e2
+2026-02-06T09:59:55.555Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T10:00:00.319Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+2026-02-06T10:00:00.326Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+Auth: User attached to req
+2026-02-06T10:00:34.560Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T10:00:36.016Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T10:13:38.112Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T10:13:38.159Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:13:40.257Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:13:41.676Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+2026-02-06T10:13:41.698Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:13:43.185Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:53:57.714Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T10:53:58.326Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:54:15.554Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:54:20.363Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T10:54:20.384Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:54:25.332Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:56:52.035Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+2026-02-06T10:56:52.046Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Found 2 records
+2026-02-06T10:57:15.368Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T10:57:15.390Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:57:53.481Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T10:57:53.497Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:58:01.395Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:58:04.021Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:58:05.302Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:58:13.111Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:58:23.902Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T10:58:24.818Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:58:32.977Z - POST /api/auth/login
+2026-02-06T10:58:35.687Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:58:41.924Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:58:44.136Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:58:47.418Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:58:48.164Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:58:59.649Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T10:59:06.840Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T10:59:07.136Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T11:01:30.701Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T11:01:30.708Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T11:13:48.053Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T11:13:48.067Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T11:13:50.292Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T11:13:52.702Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T11:13:55.334Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T11:15:37.083Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+2026-02-06T11:15:37.094Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Found 2 records
+2026-02-06T11:30:33.511Z - GET /api/auth/me
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+2026-02-06T11:30:33.554Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records
+2026-02-06T11:30:49.127Z - GET /api/appointments/my
+Auth: Protect middleware triggered
+Auth: Header present
+Auth: Token verified for 6985a8e900e7b519a7fb4d4e
+Auth: User attached to req
+GetMyProps: Fetching for user 6985a8e900e7b519a7fb4d4e
+GetMyProps: Found 2 records

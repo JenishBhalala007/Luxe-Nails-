@@ -126,7 +126,7 @@ import { FormsModule } from '@angular/forms';
                                     <div class="space-y-1 flex-1">
                                         <label class="text-[10px] uppercase tracking-wider font-bold text-service-text-sub ml-1">Price</label>
                                         <div class="relative">
-                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-service-text-sub text-sm">$</span>
+                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-service-text-sub text-sm">₹</span>
                                             <input class="w-full bg-luxe-bg dark:bg-white/5 border-transparent focus:border-service-rose-gold focus:ring-0 rounded-lg pl-6 pr-3 py-2 text-luxe-text dark:text-white font-medium text-sm transition-colors" type="text" value="55.00"/>
                                         </div>
                                     </div>
@@ -176,7 +176,7 @@ import { FormsModule } from '@angular/forms';
                                     <div class="space-y-1 flex-1">
                                         <label class="text-[10px] uppercase tracking-wider font-bold text-service-text-sub ml-1">Price</label>
                                         <div class="relative">
-                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-service-text-sub text-sm">$</span>
+                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-service-text-sub text-sm">₹</span>
                                             <input class="w-full bg-luxe-bg dark:bg-white/5 border-transparent focus:border-service-rose-gold focus:ring-0 rounded-lg pl-6 pr-3 py-2 text-luxe-text dark:text-white font-medium text-sm transition-colors" type="text" value="75.00"/>
                                         </div>
                                     </div>
@@ -223,7 +223,7 @@ import { FormsModule } from '@angular/forms';
                                     <div class="space-y-1 flex-1">
                                         <label class="text-[10px] uppercase tracking-wider font-bold text-service-text-sub ml-1">Price</label>
                                         <div class="relative">
-                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-service-text-sub text-sm">$</span>
+                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-service-text-sub text-sm">₹</span>
                                             <input class="w-full bg-luxe-bg dark:bg-white/5 border-transparent focus:border-service-rose-gold focus:ring-0 rounded-lg pl-6 pr-3 py-2 text-luxe-text dark:text-white font-medium text-sm transition-colors" type="text" value="5.00"/>
                                         </div>
                                     </div>
@@ -270,7 +270,7 @@ import { FormsModule } from '@angular/forms';
                                     <div class="space-y-1 flex-1">
                                         <label class="text-[10px] uppercase tracking-wider font-bold text-service-text-sub ml-1">Price</label>
                                         <div class="relative">
-                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-service-text-sub text-sm">$</span>
+                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-service-text-sub text-sm">₹</span>
                                             <input class="w-full bg-luxe-bg dark:bg-white/5 border-transparent focus:border-service-rose-gold focus:ring-0 rounded-lg pl-6 pr-3 py-2 text-luxe-text dark:text-white font-medium text-sm transition-colors" type="text" value="65.00"/>
                                         </div>
                                     </div>
@@ -317,7 +317,7 @@ import { FormsModule } from '@angular/forms';
                                     <div class="space-y-1 flex-1">
                                         <label class="text-[10px] uppercase tracking-wider font-bold text-service-text-sub ml-1">Price</label>
                                         <div class="relative">
-                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-service-text-sub text-sm">$</span>
+                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-service-text-sub text-sm">₹</span>
                                             <input class="w-full bg-luxe-bg dark:bg-white/5 border-transparent focus:border-service-rose-gold focus:ring-0 rounded-lg pl-6 pr-3 py-2 text-luxe-text dark:text-white font-medium text-sm transition-colors" type="text" value="15.00"/>
                                         </div>
                                     </div>

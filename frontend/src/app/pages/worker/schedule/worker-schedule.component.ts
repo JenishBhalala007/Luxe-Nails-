@@ -285,7 +285,7 @@ import { RouterLink } from '@angular/router';
                                 </div>
                                 <div>
                                     <p class="text-xs text-worker-text-muted font-bold uppercase">Price</p>
-                                    <p class="text-text-main font-bold">$85.00</p>
+                                    <p class="text-text-main font-bold">₹85.00</p>
                                     <p class="text-xs text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded-full w-fit mt-1">Paid Deposit</p>
                                 </div>
                             </div>

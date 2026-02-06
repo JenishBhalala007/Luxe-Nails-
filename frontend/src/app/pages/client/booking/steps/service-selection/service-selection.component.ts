@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { BookingSummaryComponent } from '../../components/booking-summary/booking-summary.component';
+import { ServiceService } from '../../../../../core/services/service.service';
+import { BookingStateService } from '../../services/booking-state.service';
 
 @Component({
     selector: 'app-service-selection',
@@ -26,87 +29,35 @@ import { BookingSummaryComponent } from '../../components/booking-summary/bookin
             
             <!-- Service List -->
             <div class="flex flex-col gap-4">
-                <!-- Card 1: Gel Manicure -->
-                <div class="group relative flex flex-col sm:flex-row items-center gap-4 p-4 rounded-xl bg-white dark:bg-[#2d151b] shadow-sm hover:shadow-md transition-all cursor-pointer border border-transparent hover:border-booking-primary/30">
-                    <div class="w-full sm:w-32 aspect-[4/3] sm:aspect-square bg-center bg-cover rounded-lg shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDNKXHgADqT8dzs_oHWch6WFA5G10D0lLAoWT0cQfr_pTMkidj2_EyGfqOwPZTOCaxRInLreo_vBr1rc2AmLIsHN-1opQ6igTF-FQWnev-aWd_0eygN_DkDxlTluWyWErHdUCxSeXjbbXkyV4Hq9OjoU3XMo5H9P01Pvs8aPOx_JtXH9tTICRgbq6j50GosRykbHQ_1gheGGdwp6T8TwNmNd4wNrkCKbuAGZ-fjoTp-4yF0biuRBcYyq3wHQmUlRSd0LtFHf3yjDUiy");'></div>
-                    <div class="flex flex-col flex-1 gap-1 w-full text-center sm:text-left">
-                        <div class="flex justify-between items-start w-full">
-                            <h3 class="text-lg font-bold text-[#1c0d10] dark:text-gray-100">Gel Manicure</h3>
-                            <div class="hidden sm:block text-right">
-                                <span class="text-booking-primary font-bold block">₹1200</span>
-                                <span class="text-xs text-gray-500 dark:text-gray-400">45 min</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-lg mx-auto sm:mx-0">Long-lasting polish with cuticle care. Includes hand massage and moisturizing treatment.</p>
-                        <div class="flex sm:hidden justify-center gap-3 mt-2 text-sm font-medium">
-                            <span class="text-booking-primary">₹1200</span>
-                            <span class="text-gray-400">|</span>
-                            <span class="text-gray-500">45 min</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2: Acrylic Extensions (Selected) -->
-                <div class="group relative flex flex-col sm:flex-row items-center gap-4 p-4 rounded-xl bg-white dark:bg-[#2d151b] shadow-[0_4px_20px_rgba(251,81,121,0.15)] ring-2 ring-booking-primary transition-all cursor-pointer">
-                    <div class="absolute top-0 right-0 p-2 sm:p-3">
+                <div *ngIf="loading" class="text-center py-10">Loading services...</div>
+                
+                <div *ngFor="let service of services" 
+                     (click)="selectService(service)"
+                     class="group relative flex flex-col sm:flex-row items-center gap-4 p-4 rounded-xl bg-white dark:bg-[#2d151b] shadow-sm hover:shadow-md transition-all cursor-pointer border"
+                     [ngClass]="{'border-booking-primary ring-2 ring-booking-primary shadow-[0_4px_20px_rgba(251,81,121,0.15)]': selectedService?._id === service._id, 'border-transparent hover:border-booking-primary/30': selectedService?._id !== service._id}">
+                    
+                    <div *ngIf="selectedService?._id === service._id" class="absolute top-0 right-0 p-2 sm:p-3">
                         <div class="size-6 bg-booking-primary rounded-full flex items-center justify-center text-white shadow-sm">
                             <span class="material-symbols-outlined text-[16px] font-bold">check</span>
                         </div>
                     </div>
-                    <div class="w-full sm:w-32 aspect-[4/3] sm:aspect-square bg-center bg-cover rounded-lg shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDnEe37T90w6R4N7jdQc3L1odQNiw0J8Rb7cg4Tywa-CPjrDjBS4WTjdf39pO5_W4pD8-tor_cPeUBzm4O1G0Nr4dognwxszO38D_FPIVpxNUk0SSM-iwtTN8TZ_37AyX2BambhwfQKuDuxcl6C94seB8P0bVESwSnTXRV_9pVGoITW0nO4U-JCmB39AGZoBGunpYHjD2GOXlX1mSs07cizdttHpM_fZXqt0TkwSygM1N7wo6pMulaAmsQVvO3zxTOiy9JiH9-CPwyS");'></div>
-                    <div class="flex flex-col flex-1 gap-1 w-full text-center sm:text-left">
-                        <div class="flex justify-between items-start w-full pr-8">
-                            <h3 class="text-lg font-bold text-booking-primary">Acrylic Extensions</h3>
-                            <div class="hidden sm:block text-right">
-                                <span class="text-booking-primary font-bold block">₹2500</span>
-                                <span class="text-xs text-gray-500 dark:text-gray-400">90 min</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-lg mx-auto sm:mx-0">Full set extensions with natural finish. Perfect for adding length and strength to your natural nails.</p>
-                        <div class="flex sm:hidden justify-center gap-3 mt-2 text-sm font-medium">
-                            <span class="text-booking-primary">₹2500</span>
-                            <span class="text-gray-400">|</span>
-                            <span class="text-gray-500">90 min</span>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Card 3: Express Pedicure -->
-                <div class="group relative flex flex-col sm:flex-row items-center gap-4 p-4 rounded-xl bg-white dark:bg-[#2d151b] shadow-sm hover:shadow-md transition-all cursor-pointer border border-transparent hover:border-booking-primary/30">
-                    <div class="w-full sm:w-32 aspect-[4/3] sm:aspect-square bg-center bg-cover rounded-lg shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA7lcnhj49neZokpSgGbu-CYhq1j7C-BkgMzooNDVehiiIveoOJgaLZlTOtrj2OimymvvuukaRibCWJHha5VHmlQuQmysjKlX_PRBXGGDgKK1LeL8FdDbpNUSaSwyzfdWQGFn7Vi0cI9jSnvsZogHBty_JVITGasmnZ7GyltYZ12e8XbF4pFYbSWd6Qv42Hq424zD-RD_Dd8VJSr0Cn1q9MDEz3h8OX3YJa6vPiR80G8SW4wnglJFI448cKzpPd564fOTuhTxrulCrO");'></div>
+                    <div class="w-full sm:w-32 aspect-[4/3] sm:aspect-square bg-center bg-cover rounded-lg shrink-0" 
+                         [style.backgroundImage]="'url(' + (service.imageUrl || 'assets/placeholder-service.jpg') + ')'"></div>
+                    
                     <div class="flex flex-col flex-1 gap-1 w-full text-center sm:text-left">
-                        <div class="flex justify-between items-start w-full">
-                            <h3 class="text-lg font-bold text-[#1c0d10] dark:text-gray-100">Express Pedicure</h3>
+                        <div class="flex justify-between items-start w-full pr-0 sm:pr-8">
+                            <h3 class="text-lg font-bold" [ngClass]="selectedService?._id === service._id ? 'text-booking-primary' : 'text-[#1c0d10] dark:text-gray-100'">{{ service.name }}</h3>
                             <div class="hidden sm:block text-right">
-                                <span class="text-booking-primary font-bold block">₹800</span>
-                                <span class="text-xs text-gray-500 dark:text-gray-400">30 min</span>
+                                <span class="text-booking-primary font-bold block">₹{{ service.price }}</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">{{ service.duration }} min</span>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-lg mx-auto sm:mx-0">Quick soak, file, and polish change. Ideal for a quick refresh during a busy week.</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-lg mx-auto sm:mx-0">{{ service.description }}</p>
                         <div class="flex sm:hidden justify-center gap-3 mt-2 text-sm font-medium">
-                            <span class="text-booking-primary">₹800</span>
+                            <span class="text-booking-primary">₹{{ service.price }}</span>
                             <span class="text-gray-400">|</span>
-                            <span class="text-gray-500">30 min</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4: Nail Art -->
-                <div class="group relative flex flex-col sm:flex-row items-center gap-4 p-4 rounded-xl bg-white dark:bg-[#2d151b] shadow-sm hover:shadow-md transition-all cursor-pointer border border-transparent hover:border-booking-primary/30">
-                    <div class="w-full sm:w-32 aspect-[4/3] sm:aspect-square bg-center bg-cover rounded-lg shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_B4JcsGbzFml6LdDN9BwFGNiRO2hYh3mgBaBE_4yrHRnz7PaVPlWRYgYoB_JZDQ4DXpO28vEsVFYBiODkxWLpt6xQ3mTvkdG5HVrkkbIv-dZlGsL88mW9np79y-0lmseBBVH_t3lc9odpS-5hdFkjobzeWhK9w4s_ExHsgsX6ZlM6nJhq68p-ExvWf0-T2aTgeT4MpUwpf7FYjL91WMJojPnrRBvbZU9jYIjqB9EkMjTr1rCsq6o9z6D72QSwX2RIDpZakq9gnDm8");'></div>
-                    <div class="flex flex-col flex-1 gap-1 w-full text-center sm:text-left">
-                        <div class="flex justify-between items-start w-full">
-                            <h3 class="text-lg font-bold text-[#1c0d10] dark:text-gray-100">Nail Art (Per Finger)</h3>
-                            <div class="hidden sm:block text-right">
-                                <span class="text-booking-primary font-bold block">₹150</span>
-                                <span class="text-xs text-gray-500 dark:text-gray-400">15 min</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-lg mx-auto sm:mx-0">Custom design per finger. Choose from our gallery or bring your own inspiration.</p>
-                        <div class="flex sm:hidden justify-center gap-3 mt-2 text-sm font-medium">
-                            <span class="text-booking-primary">₹150</span>
-                            <span class="text-gray-400">|</span>
-                            <span class="text-gray-500">15 min</span>
+                            <span class="text-gray-500">{{ service.duration }} min</span>
                         </div>
                     </div>
                 </div>
@@ -119,6 +70,49 @@ import { BookingSummaryComponent } from '../../components/booking-summary/bookin
         </aside>
       </div>
     </div>
-  `
+    `
 })
-export class ServiceSelectionComponent { }
+export class ServiceSelectionComponent implements OnInit {
+    services: any[] = [];
+    selectedService: any | null = null;
+    loading = true;
+
+    constructor(
+        private serviceService: ServiceService,
+        private bookingState: BookingStateService,
+        private router: Router,
+        private cdr: ChangeDetectorRef
+    ) { }
+
+    ngOnInit() {
+        this.serviceService.getServices().subscribe({
+            next: (data) => {
+                console.log('Services loaded:', data);
+                this.services = data;
+                this.loading = false;
+                this.cdr.detectChanges(); // Force update
+                // Restore selection if exists
+                const state = this.bookingState.getState();
+                if (state.service) {
+                    this.selectedService = this.services.find(s => s._id === state.service._id);
+                }
+            },
+            error: (err) => {
+                console.error('Failed to load services', err);
+                this.loading = false;
+            }
+        });
+    }
+
+    selectService(service: any) {
+        this.selectedService = service;
+        this.bookingState.updateState({ service: service });
+        // Optional: Auto-navigate or let user click formatted button in summary? 
+        // The summary usually has the "Continue" button. 
+        // But for better UX, usually selecting here updates the state, and summary handles navigation.
+        // However, the previous static template didn't have a continue button in the main area, only in summary (which I assume).
+        // Let's assume the user clicks the card to select, and then clicks continue in the summary.
+        // Or if I look at TimeSelection, the continue button is in the summary side.
+        // So just updating state is enough. The summary component should observe the state.
+    }
+}

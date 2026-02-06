@@ -4,27 +4,43 @@ const appointmentSchema = new mongoose.Schema({
     client: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true,
+        required: true
     },
-    worker: {
+    artist: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+        ref: 'Artist'
     },
     service: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Service',
-        required: true,
+        required: true
     },
     date: {
         type: Date,
-        required: true,
+        required: true
+    },
+    time: {
+        type: String,
+        required: true
     },
     status: {
         type: String,
-        enum: ['pending', 'confirmed', 'completed', 'cancelled'],
-        default: 'pending',
+        enum: ['pending', 'confirmed', 'cancelled', 'completed'],
+        default: 'pending'
     },
-}, { timestamps: true });
+    notes: {
+        type: String
+    },
+    paymentMethod: {
+        type: String,
+        enum: ['card', 'cash', 'upi'],
+        required: true
+    },
+    totalAmount: {
+        type: Number
+    }
+}, {
+    timestamps: true
+});
 
 module.exports = mongoose.model('Appointment', appointmentSchema);

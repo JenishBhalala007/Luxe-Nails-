@@ -98,13 +98,25 @@ export class LoginComponent {
     login() {
         if (this.email && this.password) {
             this.authService.login({ email: this.email, password: this.password }).subscribe({
-                next: (user) => {
-                    console.log('Login successful', user);
-                    this.router.navigate(['/worker/dashboard']);
+                next: (res) => {
+                    console.log('Login successful', res);
+                    // Check user role and redirect accordingly
+                    const role = res.role;
+                    if (role === 'admin') {
+                        this.router.navigate(['/admin/dashboard']);
+                    } else if (role === 'worker') {
+                        this.router.navigate(['/worker/dashboard']);
+                    } else {
+                        // Default to home page for clients
+                        this.router.navigate(['/client/landing']);
+                        // Or if you prefer the home page for clients: 
+                        // this.router.navigate(['/client/landing']);
+                    }
                 },
                 error: (err) => {
                     console.error('Login failed', err);
                     // Handle error (e.g., show message)
+                    alert('Login failed. Please check your credentials.');
                 }
             });
         }

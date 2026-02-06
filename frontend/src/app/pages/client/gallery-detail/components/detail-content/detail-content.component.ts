@@ -75,7 +75,7 @@ import { CommonModule } from '@angular/common';
                     <div>
                         <h3 class="text-lg font-bold font-display mb-3">Estimated Price</h3>
                         <div class="flex items-baseline gap-2">
-                            <span class="text-3xl font-bold text-text-main dark:text-white">$85.00</span>
+                            <span class="text-3xl font-bold text-text-main dark:text-white">₹85.00</span>
                             <span class="text-sm text-gray-400">/ full set</span>
                         </div>
                         <p class="text-xs text-rose-gold mt-1">*Price may vary based on nail length and add-ons.</p>

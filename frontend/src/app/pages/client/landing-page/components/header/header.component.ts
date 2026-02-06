@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../../core/services/auth.service';
@@ -60,14 +60,10 @@ import { LoginRequiredModalComponent } from '../../../../../shared/components/lo
                 <!-- Profile Avatar (Visible if Logged In) -->
                 <div 
                     *ngIf="isLoggedIn()"
-                    routerLink="/client/settings"
-                    class="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-sm cursor-pointer hover:ring-2 hover:ring-primary-bold transition-all"
+                    routerLink="/client/dashboard"
+                    class="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-sm cursor-pointer hover:ring-2 hover:ring-primary-bold transition-all flex items-center justify-center bg-[#ee2b58] text-white font-bold text-lg"
                 >
-                    <img 
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" 
-                        alt="Profile" 
-                        class="w-full h-full object-cover"
-                    >
+                    {{ user?.name?.charAt(0) || 'U' }}
                 </div>
 
                 <!-- Log In Button (Visible if Guest) -->
@@ -88,21 +84,28 @@ import { LoginRequiredModalComponent } from '../../../../../shared/components/lo
     ></app-login-required-modal>
   `
 })
-export class LandingHeaderComponent {
+export class LandingHeaderComponent implements OnInit {
     @Input() theme: 'light' | 'dark' | 'cream' = 'cream';
     showLoginModal = false;
+    user: any = null;
 
     navItems = [
         { label: 'Home', route: '/client/landing' },
         { label: 'Services', route: '/client/services' },
         { label: 'Artists', route: '/client/artists' },
-        { label: 'Gallery', route: '/client/gallery' }
+        { label: 'Gallery', route: '/client/gallery-public' }
     ];
 
     constructor(
         private authService: AuthService,
         private router: Router
     ) { }
+
+    ngOnInit() {
+        this.authService.user$.subscribe(user => {
+            this.user = user;
+        });
+    }
 
     handleBookNow() {
         if (this.authService.isLoggedIn()) {

@@ -77,7 +77,9 @@ import { CommonModule } from '@angular/common';
                     </button>
                     <!-- Profile -->
                     <div class="flex items-center gap-3 cursor-pointer">
-                        <div class="bg-center bg-no-repeat bg-cover rounded-full w-10 h-10 border-2 border-white shadow-sm" data-alt="Portrait of admin user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBt7p2KQScb5r0jhvmtUEYbYXhSUaXOJ1UHmOpkDk0jNz0hPgo8LAEkNIYCrk3zXr9gY4Wu1bTRri3wUsSnCWP9cxt85aw2Ad-Wdx4uS_9zdYBul-cbxecBObuokOMhMI-Y7VnOSy_dSrV47fzUoaRMZ-Pyf52LTfHFeXcI0gzUDbwq6u4p-DYvga2HkPeH-nT6V8vOQoNE-hRWFECQNH3TjNIgtqjK9QlYt_rrVD6mE2TTSEnfmG4LPPDJcD6PkV6pJq3WjI51J5h5");'></div>
+                        <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center border-2 border-white shadow-sm text-primary font-bold text-lg">
+                            MJ
+                        </div>
                         <div class="hidden lg:flex flex-col">
                             <span class="text-sm font-bold text-luxe-text leading-tight">Sarah Jenkins</span>
                             <span class="text-xs text-luxe-text-muted">Manager</span>

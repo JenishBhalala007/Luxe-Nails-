@@ -58,7 +58,9 @@ import { RouterLink } from '@angular/router';
                         <h2 class="text-text-main dark:text-white text-4xl md:text-5xl font-serif font-medium leading-tight">Welcome back, Sarah</h2>
                     </div>
                     <div class="flex items-center gap-3 bg-white dark:bg-white/5 p-2 pr-4 rounded-full shadow-soft border border-white dark:border-white/10">
-                        <div class="size-10 rounded-full bg-cover bg-center border-2 border-white dark:border-white/20" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAqpShhAf3NDqbn4OzPMAV2Ku9Q-hERKZSwkUC7tx5BZcCuHwMihlA3JLw6RGbu-Cq3i8OIcT7TX2ICZstJ_SNCc3lhXbbB3iSONKVc-wfhzcYUqCfmSLNjabMVbwlR04Q_Qu00K4IcQrUFND4Wp01JK4_-_7n2wk0RaQQI88gk5mqvB09nHLUZ5l5l25PjZMNNGpHL8OW7-kc3ttMn5s2Ty_HXv2ap_56kJ1lgJghgpJ5TBq2GkfCDmnhiTgp6jLhQYIMcNmWZaJ2t");'></div>
+                        <div class="size-10 rounded-full bg-rose-gold/10 dark:bg-primary/20 flex items-center justify-center border-2 border-white dark:border-white/20 text-rose-gold dark:text-primary font-bold text-lg">
+                            SJ
+                        </div>
                         <div class="flex flex-col">
                             <span class="text-xs font-bold text-text-main dark:text-white">Sarah Jenkins</span>
                             <span class="text-[10px] text-text-sub dark:text-gray-400 uppercase tracking-wide">Master Stylist</span>
