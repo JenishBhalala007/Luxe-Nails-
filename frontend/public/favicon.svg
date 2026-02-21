@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <path d="M 50 25
+           C 65 35 68 55 58 65
+           C 50 60 42 60 42 65
+           C 32 55 35 35 50 25 Z"
+        fill="none" stroke="#000000" stroke-width="8" stroke-linejoin="round" />
+
+  <!-- Left Leaf (overlapped) -->
+  <path d="M 48 60
+           C 33 45 15 45 15 62
+           C 15 80 35 88 50 82
+           C 40 75 42 68 48 60 Z"
+        fill="none" stroke="#000000" stroke-width="8" stroke-linejoin="round" />
+
+  <!-- Right Leaf -->
+  <path d="M 52 60
+           C 67 45 85 45 85 62
+           C 85 80 65 88 50 82
+           C 60 75 58 68 52 60 Z"
+        fill="none" stroke="#000000" stroke-width="8" stroke-linejoin="round" />
+</svg>

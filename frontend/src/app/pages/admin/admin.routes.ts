@@ -12,4 +12,5 @@ export const ADMIN_ROUTES: Routes = [
     { path: 'users', component: AdminUsersComponent },
     { path: 'services', component: AdminServicesComponent },
     { path: 'gallery', component: AdminGalleryComponent },
+    { path: 'messages', loadComponent: () => import('./messages/admin-messages.component').then(m => m.AdminMessagesComponent) },
 ];

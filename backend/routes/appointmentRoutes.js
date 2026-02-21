@@ -23,7 +23,7 @@ router.route('/')
 router.get('/my', protect, getMyAppointments);
 router.get('/artist/:artistId', getAppointmentsByArtist); // Public access to check availability
 
-router.route('/:id/status').put(protect, admin, updateAppointmentStatus);
+router.route('/:id/status').put(protect, updateAppointmentStatus);
 router.route('/:id/cancel').put(protect, cancelMyAppointment);
 router.route('/:id').delete(protect, deleteAppointment);
 

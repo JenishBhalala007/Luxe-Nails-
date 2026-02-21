@@ -46,8 +46,10 @@ const protect = async (req, res, next) => {
 
 const admin = (req, res, next) => {
     if (req.user && req.user.role === 'admin') {
+        fs.appendFileSync('server.log', `Auth: Admin access granted for ${req.user.email}\n`);
         next();
     } else {
+        fs.appendFileSync('server.log', `Auth: Admin access DENIED for ${req.user ? req.user.email : 'unknown'} with role ${req.user ? req.user.role : 'none'}\n`);
         res.status(401).json({ message: 'Not authorized as an admin' });
     }
 };

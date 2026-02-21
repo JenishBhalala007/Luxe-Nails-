@@ -9,16 +9,16 @@ const serviceSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    price: {
-        type: Number,
-        required: true
+    priceRange: {
+        min: { type: Number, required: true },
+        max: { type: Number, required: true }
     },
-    duration: {
-        type: Number, // in minutes
-        required: true
+    timeRange: { // in minutes
+        min: { type: Number, required: true },
+        max: { type: Number, required: true }
     },
     category: {
-        type: String,
+        type: [String],
         required: true
     },
     imageUrl: {

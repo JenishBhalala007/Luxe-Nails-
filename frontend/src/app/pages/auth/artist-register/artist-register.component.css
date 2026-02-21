@@ -1,0 +1,21 @@
+.pill-checkbox:checked+div {
+    background-color: #b66d74;
+    color: white;
+    border-color: #b66d74;
+}
+
+.pill-label div {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hide default select arrow */
+select {
+    background-image: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+select::-ms-expand {
+    display: none;
+}

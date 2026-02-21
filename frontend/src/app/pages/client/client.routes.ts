@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 
 export const CLIENT_ROUTES: Routes = [
+    { path: '', redirectTo: 'landing', pathMatch: 'full' },
     {
         path: '',
         loadComponent: () => import('./layout/client-layout.component').then(m => m.ClientLayoutComponent),
@@ -12,33 +13,45 @@ export const CLIENT_ROUTES: Routes = [
             { path: 'settings', loadComponent: () => import('./profile/client-profile.component').then(m => m.ClientProfileComponent) }
         ]
     },
-    { path: '', redirectTo: 'landing', pathMatch: 'full' },
-    { path: 'landing', component: LandingPageComponent },
-    // Public pages (kept outside layout for now if they need full width, or move inside if desired)
     {
-        path: 'services',
-        loadComponent: () => import('./services/services-page.component').then(m => m.ServicesPageComponent)
-    },
-    {
-        path: 'artists',
-        loadComponent: () => import('./artists/artists-page.component').then(m => m.ArtistsPageComponent)
-    },
-    {
-        path: 'gallery-public', // Renamed old gallery route to distinct it, or if user wants public gallery
-        loadComponent: () => import('./gallery/gallery-page.component').then(m => m.GalleryPageComponent)
-    },
-    {
-        path: 'gallery/:id',
-        loadComponent: () => import('./gallery-detail/gallery-detail-page.component').then(m => m.GalleryDetailPageComponent)
+        path: '',
+        loadComponent: () => import('./layout/public-layout.component').then(m => m.PublicLayoutComponent),
+        children: [
+            { path: 'landing', component: LandingPageComponent },
+            {
+                path: 'services',
+                loadComponent: () => import('./services/services-page.component').then(m => m.ServicesPageComponent)
+            },
+            {
+                path: 'artists',
+                loadComponent: () => import('./artists/artists-page.component').then(m => m.ArtistsPageComponent)
+            },
+            {
+                path: 'gallery-public',
+                loadComponent: () => import('./gallery/gallery-page.component').then(m => m.GalleryPageComponent)
+            },
+            {
+                path: 'contact',
+                loadComponent: () => import('./contact/contact-page.component').then(m => m.ContactPageComponent)
+            },
+            {
+                path: 'gallery/:id',
+                loadComponent: () => import('./gallery-detail/gallery-detail-page.component').then(m => m.GalleryDetailPageComponent)
+            }
+        ]
     },
     {
         path: 'booking',
         loadComponent: () => import('./booking/booking.component').then(m => m.BookingComponent),
         children: [
-            { path: '', redirectTo: 'services', pathMatch: 'full' },
+            { path: '', redirectTo: '/client/booking/services', pathMatch: 'full' },
             {
                 path: 'services',
                 loadComponent: () => import('./booking/steps/service-selection/service-selection.component').then(m => m.ServiceSelectionComponent)
+            },
+            {
+                path: 'nails',
+                loadComponent: () => import('./booking/steps/nails-selection/nails-selection.component').then(m => m.NailsSelectionComponent)
             },
             {
                 path: 'artists',

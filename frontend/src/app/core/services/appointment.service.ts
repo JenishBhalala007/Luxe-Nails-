@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class AppointmentService {
-    private apiUrl = 'http://127.0.0.1:5000/api/appointments';
+    private apiUrl = 'http://localhost:5000/api/appointments';
 
     constructor(private http: HttpClient) { }
 
@@ -24,5 +24,13 @@ export class AppointmentService {
 
     cancelAppointment(id: string): Observable<any> {
         return this.http.put<any>(`${this.apiUrl}/${id}/cancel`, {});
+    }
+
+    getAllAppointments(): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl);
+    }
+
+    updateAppointmentStatus(id: string, status: string): Observable<any> {
+        return this.http.put<any>(`${this.apiUrl}/${id}/status`, { status });
     }
 }

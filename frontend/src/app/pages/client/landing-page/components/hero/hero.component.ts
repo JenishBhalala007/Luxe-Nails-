@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-landing-hero',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, RouterLink],
     template: `
     <section class="relative w-full py-12 md:py-24 overflow-hidden">
         <!-- Background decorative blob -->
@@ -24,7 +25,7 @@ import { CommonModule } from '@angular/common';
                         </p>
                     </div>
                     <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-4">
-                        <button class="bg-primary hover:bg-[#ffc1d0] text-text-main px-8 py-3.5 rounded-lg text-base font-bold shadow-lg hover:shadow-primary/40 transition-all duration-300 transform hover:-translate-y-1 min-w-[160px]">
+                        <button routerLink="/client/booking/services" [queryParams]="{reset: 'true'}" class="bg-primary hover:bg-[#ffc1d0] text-text-main px-8 py-3.5 rounded-lg text-base font-bold shadow-lg hover:shadow-primary/40 transition-all duration-300 transform hover:-translate-y-1 min-w-[160px]">
                             Book Appointment
                         </button>
                         <button class="bg-white dark:bg-white/10 hover:bg-gray-50 border border-gray-200 dark:border-white/10 text-text-main dark:text-white px-8 py-3.5 rounded-lg text-base font-bold shadow-sm hover:shadow-md transition-all duration-300 min-w-[160px]">

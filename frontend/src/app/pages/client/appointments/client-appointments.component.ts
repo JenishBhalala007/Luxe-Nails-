@@ -43,7 +43,7 @@ import { finalize, timeout } from 'rxjs/operators';
                             <span class="material-symbols-outlined text-[32px] text-gray-300 dark:text-gray-600">event_busy</span>
                         </div>
                         <p class="text-sm text-appointments-text-muted dark:text-gray-500">No {{ activeTab }} appointments found.</p>
-                        <a *ngIf="activeTab === 'upcoming'" routerLink="/client/booking/service" class="font-semibold text-appointments-primary hover:underline">Book a new appointment</a>
+                        <a *ngIf="activeTab === 'upcoming'" routerLink="/client/booking/services" [queryParams]="{reset: 'true'}" class="font-semibold text-appointments-primary hover:underline">Book a new appointment</a>
                     </div>
 
                     <article *ngFor="let appt of (activeTab === 'upcoming' ? upcomingAppointments : pastAppointments)" class="group flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-[#1a0b0e] shadow-lg hover:shadow-xl transition-all border border-[#f4e6e9] dark:border-white/5 md:flex-row">
@@ -72,7 +72,7 @@ import { finalize, timeout } from 'rxjs/operators';
                             <div class="mt-1 flex flex-col gap-1 text-sm text-appointments-text-muted dark:text-gray-400 sm:flex-row sm:items-center sm:gap-4">
                                 <div class="flex items-center gap-1.5">
                                     <span class="material-symbols-outlined text-[18px]">person</span>
-                                    <span>Artist: <span class="font-medium text-appointments-text-main dark:text-white">{{ appt.artist?.name || 'Any Artist' }}</span></span>
+                                    <span>Artist: <span class="font-medium text-appointments-text-main dark:text-white">{{ getArtistDisplayName(appt) }}</span></span>
                                 </div>
                                 <div class="hidden h-1 w-1 rounded-full bg-gray-300 sm:block"></div>
                                 <div class="flex items-center gap-1.5">
@@ -135,23 +135,19 @@ export class ClientAppointmentsComponent implements OnInit {
                     console.log('Appointments loaded:', data);
                     try {
                         if (!data || !Array.isArray(data)) { data = []; }
-                        const now = new Date();
-                        now.setHours(0, 0, 0, 0); // Normalize to start of day
+                        
+                        this.upcomingAppointments = data.filter(a => {
+                           if (a.status === 'cancelled' || a.status === 'completed') return false;
+                           // Log for debugging
+                           const past = this.isPast(a.date, a.time);
+                           // console.log(`Appt ${a.service?.name} at ${a.time} on ${a.date} isPast? ${past}`);
+                           return !past;
+                        }).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-                        // Simple sort
-                        const sorted = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+                        this.pastAppointments = data.filter(a => {
+                            return a.status === 'cancelled' || a.status === 'completed' || this.isPast(a.date, a.time);
+                        }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-                        this.upcomingAppointments = sorted.filter(a => {
-                            const d = new Date(a.date);
-                            // Compare timestamps for strict >= (with 24h buffer for timezone safety)
-                            const yesterday = now.getTime() - (24 * 60 * 60 * 1000);
-                            return d.getTime() >= yesterday && a.status !== 'cancelled' && a.status !== 'completed';
-                        }).reverse(); // Nearest first
-
-                        this.pastAppointments = sorted.filter(a => {
-                            const d = new Date(a.date);
-                            return d.getTime() < now.getTime() || a.status === 'completed' || a.status === 'cancelled';
-                        });
                     } catch (e) {
                         console.error('Error processing appointments data:', e);
                     }
@@ -160,6 +156,40 @@ export class ClientAppointmentsComponent implements OnInit {
                     console.error('Error fetching appointments:', err);
                 }
             });
+    }
+
+    isPast(dateStr: string, timeStr: string): boolean {
+        const now = new Date();
+        const apptDate = new Date(dateStr);
+        
+        // Normalize dates to midnight for comparison
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        
+        const targetDate = new Date(apptDate);
+        targetDate.setHours(0,0,0,0);
+        
+        // If date is before today, it is past
+        if (targetDate.getTime() < today.getTime()) return true;
+        // If date is after today, it is future
+        if (targetDate.getTime() > today.getTime()) return false;
+        
+        // If same day, check time
+        if (!timeStr) return false; 
+
+        // Parse time (handle "14:30" or "2:30 PM")
+        let [hours, minutes] = timeStr.replace(/[^0-9:]/g, '').split(':').map(Number);
+        const isPM = timeStr.toLowerCase().includes('pm');
+        const isAM = timeStr.toLowerCase().includes('am');
+
+        if (isPM && hours < 12) hours += 12;
+        if (isAM && hours === 12) hours = 0;
+
+        const apptTime = new Date(today); // Use today's date
+        apptTime.setHours(hours, minutes, 0, 0);
+        
+        // Compare full timestamps
+        return apptTime.getTime() < now.getTime();
     }
 
     cancelAppointment(id: string) {
@@ -175,5 +205,13 @@ export class ClientAppointmentsComponent implements OnInit {
                 alert('Failed to cancel appointment');
             }
         });
+    }
+
+    getArtistDisplayName(appt: any): string {
+        if (!appt) return 'Any Artist';
+        if (appt.isBroadcast) {
+            return appt.artist?.name ? `Any Artist Available Request (${appt.artist.name})` : 'Any Artist Available Request';
+        }
+        return appt.artist?.name || 'Any Artist';
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { BookingStateService } from '../../services/booking-state.service';
@@ -10,50 +10,18 @@ import { ArtistService } from '../../../../../core/services/artist.service';
     standalone: true,
     imports: [CommonModule, RouterLink],
     template: `
-    <div class="flex-1 w-full bg-booking-bg-light dark:bg-booking-bg-dark">
+    <div class="flex-1 w-full bg-background-light dark:bg-background-dark">
         <!-- Main Content Layout -->
         <div class="w-full max-w-[1200px] mx-auto p-4 lg:p-8 flex flex-col lg:flex-row gap-12">
             <!-- Left Column: Calendar & Time -->
             <main class="flex-1 flex flex-col gap-10">
-                <!-- Stepper -->
-                <div class="flex w-full flex-col items-center justify-center gap-4 md:flex-row md:justify-between">
-                    <div class="flex w-full items-center justify-center gap-2 md:w-auto">
-                        <div class="flex items-center gap-2">
-                            <div class="flex size-8 items-center justify-center rounded-full bg-green-100 text-green-600">
-                                <span class="material-symbols-outlined text-lg">check</span>
-                            </div>
-                            <span class="text-sm font-semibold text-[#1b0d10] dark:text-gray-200">Service</span>
-                        </div>
-                        <div class="h-px w-12 bg-gray-200 dark:bg-white/10"></div>
-                        <div class="flex items-center gap-2">
-                            <div class="flex size-8 items-center justify-center rounded-full bg-green-100 text-green-600">
-                                <span class="material-symbols-outlined text-lg">check</span>
-                            </div>
-                            <span class="text-sm font-semibold text-[#1b0d10] dark:text-gray-200">Artist</span>
-                        </div>
-                        <div class="h-px w-12 bg-gray-200 dark:bg-white/10"></div>
-                        <div class="flex items-center gap-2">
-                            <div class="flex size-8 items-center justify-center rounded-full bg-booking-step3-primary text-white shadow-lg shadow-booking-step3-primary/30">
-                                <span class="text-sm font-bold">3</span>
-                            </div>
-                            <span class="text-sm font-bold text-booking-step3-primary">Time</span>
-                        </div>
-                        <div class="h-px w-12 bg-gray-200 dark:bg-white/10"></div>
-                        <div class="flex items-center gap-2 opacity-50">
-                            <div class="flex size-8 items-center justify-center rounded-full border border-gray-300 dark:border-gray-600 bg-transparent text-gray-400">
-                                <span class="text-sm font-bold">4</span>
-                            </div>
-                            <span class="text-sm font-medium text-[#1b0d10] dark:text-gray-400">Details</span>
-                        </div>
-                    </div>
-                </div>
-
+                
                 <!-- Content -->
                 <div class="flex flex-col gap-10">
                     <!-- Heading -->
                     <div class="flex flex-col gap-2">
                         <h1 class="text-3xl font-extrabold tracking-tight text-[#1b0d10] dark:text-gray-100 sm:text-4xl">Schedule Your Appointment</h1>
-                        <p class="text-base font-normal text-gray-500 dark:text-gray-400">Choose a date and time for your {{ service?.name }} with {{ artist?.name || 'an available artist' }}.</p>
+                        <p class="text-base font-normal text-gray-500 dark:text-gray-400">Choose a date and time for your appointment with {{ artist?.name || 'an available artist' }}.</p>
                     </div>
 
                     <!-- Calendar Widget -->
@@ -76,7 +44,7 @@ import { ArtistService } from '../../../../../core/services/artist.service';
                                         [disabled]="dateObj.disabled"
                                         class="flex h-10 w-full items-center justify-center rounded-full text-sm font-medium transition-all"
                                         [ngClass]="{
-                                            'bg-booking-step3-primary text-white shadow-md shadow-booking-step3-primary/20 hover:bg-booking-step3-primary/90 font-bold': isSameDate(dateObj.date, selectedDate),
+                                            'bg-primary text-[#1b0d10] shadow-md shadow-primary/40 hover:bg-[#ffb0c4] font-bold': isSameDate(dateObj.date, selectedDate),
                                             'text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/5': !isSameDate(dateObj.date, selectedDate) && !dateObj.disabled,
                                             'text-gray-300 cursor-not-allowed': dateObj.disabled
                                         }">
@@ -92,9 +60,7 @@ import { ArtistService } from '../../../../../core/services/artist.service';
                         
                         <div *ngIf="loadingSlots" class="text-center py-8">Checking availability...</div>
                         
-                        <div *ngIf="!loadingSlots && timeSlots.length === 0" class="text-center py-8 text-gray-500">
-                            No available slots for this date. Please try another day.
-                        </div>
+                        <div *ngIf="!loadingSlots && timeSlots.length === 0" class="text-center py-10 text-booking-primary">No available time slots for the selected date. Please try another date or artist.</div>
 
                         <div *ngIf="!loadingSlots && timeSlots.length > 0" class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
                             <button *ngFor="let slot of timeSlots"
@@ -102,8 +68,8 @@ import { ArtistService } from '../../../../../core/services/artist.service';
                                     [disabled]="!slot.available"
                                     class="flex h-12 w-full items-center justify-center rounded-full border px-4 text-sm font-medium transition-all"
                                     [ngClass]="{
-                                        'bg-booking-step3-primary border-booking-step3-primary text-white shadow-lg ring-2 ring-booking-step3-primary ring-offset-2 dark:ring-offset-[#230f14] font-bold': selectedTime === slot.time,
-                                        'border-gray-200 dark:border-white/10 bg-white dark:bg-[#2d151b] text-[#1b0d10] dark:text-gray-200 hover:border-booking-step3-primary hover:text-booking-step3-primary': selectedTime !== slot.time && slot.available,
+                                        'bg-primary border-primary text-[#1b0d10] shadow-lg ring-2 ring-primary ring-offset-2 dark:ring-offset-[#230f14] font-bold': selectedTime === slot.time,
+                                        'border-gray-200 dark:border-white/10 bg-white dark:bg-[#2d151b] text-[#1b0d10] dark:text-gray-200 hover:border-primary hover:shadow-md': selectedTime !== slot.time && slot.available,
                                         'cursor-not-allowed border-transparent bg-gray-100 dark:bg-white/5 text-gray-400': !slot.available
                                     }">
                                 {{ slot.time }}
@@ -118,20 +84,53 @@ import { ArtistService } from '../../../../../core/services/artist.service';
                 <div class="sticky top-28 backdrop-blur-md bg-booking-beige-lux/40 dark:bg-[#2d151b]/40 rounded-2xl p-6 shadow-xl border border-white/50 dark:border-white/10">
                     <h2 class="mb-6 text-xl font-bold text-[#1b0d10] dark:text-gray-100">Your Booking</h2>
                     <div class="flex flex-col gap-6">
-                        <!-- Service Info -->
-                        <div class="flex items-start justify-between border-b border-gray-200/50 dark:border-white/10 pb-4" *ngIf="service">
-                            <div class="flex flex-col gap-1">
-                                <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Service</span>
-                                <span class="text-lg font-bold text-[#1b0d10] dark:text-gray-100">{{ service.name }}</span>
-                                <span class="text-sm text-gray-600 dark:text-gray-300">{{ service.duration }} mins</span>
+                        
+                         <!-- Service Items -->
+                        <div *ngIf="selectedServices.length > 0">
+                            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Services</div>
+                            <div *ngFor="let service of selectedServices" class="flex justify-between items-start pb-2 border-b border-gray-200/50 dark:border-white/10 mb-2">
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-sm font-bold text-[#1b0d10] dark:text-gray-100">{{ service.name }}</span>
+                                    <span class="text-xs text-gray-600 dark:text-gray-300">
+                                        {{ service.timeRange && service.timeRange.min !== service.timeRange.max 
+                                            ? service.timeRange.min + ' - ' + service.timeRange.max 
+                                            : service.duration }} mins
+                                    </span>
+                                </div>
+                                <div class="flex flex-col items-end">
+                                    <span class="text-sm font-bold text-[#1b0d10] dark:text-gray-100">
+                                        {{ service.priceRange && service.priceRange.min !== service.priceRange.max
+                                            ? '₹' + service.priceRange.min + ' - ₹' + service.priceRange.max
+                                            : '₹' + service.price }}
+                                    </span>
+                                    <span class="text-[10px] text-gray-500 italic">Pay at Venue</span>
+                                </div>
                             </div>
-                            <span class="font-bold text-[#1b0d10] dark:text-gray-100">₹{{ service.price }}</span>
+                        </div>
+
+                         <!-- Design Items -->
+                        <div>
+                             <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Designs</div>
+                            <div *ngIf="selectedDesigns.length === 0" class="text-sm text-gray-500 italic pb-2">None selected</div>
+                            <div *ngFor="let design of selectedDesigns" class="flex justify-between items-start pb-2 border-b border-gray-200/50 dark:border-white/10 mb-2">
+                                <div class="flex items-start gap-3">
+                                    <div class="size-8 overflow-hidden rounded-md border border-gray-200 dark:border-white/10">
+                                         <img [alt]="design.title" class="h-full w-full object-cover" [src]="design.imageUrl || 'assets/placeholder-nail.jpg'"/>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-medium text-[#1b0d10] dark:text-gray-100">{{ design.title }}</span>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-bold text-[#1b0d10] dark:text-gray-100">
+                                    {{ design.price ? '+₹' + design.price : 'Included' }}
+                                </span>
+                            </div>
                         </div>
                         
                         <!-- Artist Info -->
                         <div class="flex items-start gap-4 border-b border-gray-200/50 dark:border-white/10 pb-4" *ngIf="artist">
                             <div class="size-12 overflow-hidden rounded-full border-2 border-white dark:border-white/10 shadow-sm">
-                                <img [alt]="artist.name" class="h-full w-full object-cover" [src]="artist.profileImage || 'assets/placeholder-user.jpg'"/>
+                                <img [alt]="artist.name" class="h-full w-full object-cover" [src]="artist.profileImage || 'assets/placeholder-user.svg'"/>
                             </div>
                             <div class="flex flex-col gap-0.5">
                                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Artist</span>
@@ -140,13 +139,14 @@ import { ArtistService } from '../../../../../core/services/artist.service';
                                     <span class="material-symbols-outlined text-sm text-yellow-500 fill-current">star</span>
                                     <span class="text-xs font-medium text-gray-600 dark:text-gray-400">{{ artist.rating || '4.8' }}</span>
                                 </div>
+                                <span class="text-xs font-bold text-[#ea5b7a] mt-1">Fee: +₹200</span>
                             </div>
                         </div>
 
                         <!-- Date & Time Selection -->
                         <div class="flex flex-col gap-3 rounded-xl bg-white/60 dark:bg-white/10 p-4" *ngIf="selectedDate && selectedTime">
                             <div class="flex items-center gap-3">
-                                <div class="flex size-8 items-center justify-center rounded-full bg-booking-step3-primary/10 text-booking-step3-primary">
+                                <div class="flex size-8 items-center justify-center rounded-full bg-primary/20 text-[#ea5b7a]">
                                     <span class="material-symbols-outlined text-lg">calendar_month</span>
                                 </div>
                                 <div class="flex flex-col">
@@ -155,7 +155,7 @@ import { ArtistService } from '../../../../../core/services/artist.service';
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
-                                <div class="flex size-8 items-center justify-center rounded-full bg-booking-step3-primary/10 text-booking-step3-primary">
+                                <div class="flex size-8 items-center justify-center rounded-full bg-primary/20 text-[#ea5b7a]">
                                     <span class="material-symbols-outlined text-lg">schedule</span>
                                 </div>
                                 <div class="flex flex-col">
@@ -168,14 +168,14 @@ import { ArtistService } from '../../../../../core/services/artist.service';
                         <!-- Total -->
                         <div class="flex items-center justify-between pt-2">
                             <span class="text-sm font-medium text-gray-600 dark:text-gray-300">Total</span>
-                            <span class="text-2xl font-black text-[#1b0d10] dark:text-gray-100">₹{{ service?.price || 0 }}</span>
+                            <span class="text-2xl font-black text-[#1b0d10] dark:text-gray-100">₹{{ getTotalPrice() }}</span>
                         </div>
 
                         <!-- Action -->
                         <button [routerLink]="selectedTime ? '/client/booking/review' : null" 
                                 [disabled]="!selectedTime"
-                                [ngClass]="selectedTime ? 'bg-booking-step3-primary hover:bg-[#a01c40] shadow-lg hover:shadow-booking-step3-primary/30 transform hover:-translate-y-0.5' : 'bg-gray-300 cursor-not-allowed'"
-                                class="flex w-full items-center justify-center gap-2 rounded-full py-4 text-base font-bold text-white transition-all">
+                                [ngClass]="selectedTime ? 'bg-primary text-[#1b0d10] hover:bg-[#ffb0c4] shadow-lg shadow-primary/30 transform hover:-translate-y-0.5' : 'bg-gray-300 text-gray-500 cursor-not-allowed'"
+                                class="flex w-full items-center justify-center gap-2 rounded-full py-4 text-base font-bold transition-all">
                             <span>Continue to Details</span>
                             <span class="material-symbols-outlined text-lg">arrow_forward</span>
                         </button>
@@ -187,7 +187,8 @@ import { ArtistService } from '../../../../../core/services/artist.service';
     `
 })
 export class TimeSelectionComponent implements OnInit {
-    service: any;
+    selectedServices: any[] = [];
+    selectedDesigns: any[] = [];
     artist: any;
 
     selectedDate: Date | null = null;
@@ -204,15 +205,17 @@ export class TimeSelectionComponent implements OnInit {
         private bookingState: BookingStateService,
         private appointmentService: AppointmentService,
         private artistService: ArtistService, // Need full artist details if current state is sparse
-        private router: Router
+        private router: Router,
+        private cdr: ChangeDetectorRef
     ) { }
 
     ngOnInit() {
         const state = this.bookingState.getState();
-        this.service = state.service;
+        this.selectedServices = state.services || [];
+        this.selectedDesigns = state.nailDesigns || [];
         this.artist = state.artist;
 
-        if (!this.service) {
+        if (this.selectedServices.length === 0) {
             this.router.navigate(['/client/booking/service']);
             return;
         }
@@ -271,55 +274,68 @@ export class TimeSelectionComponent implements OnInit {
     fetchSlots(date: Date) {
         this.loadingSlots = true;
         this.timeSlots = [];
-        // Use local date string to avoid timezone shifts
+        this.selectedTime = null; // Reset selection
+
+        console.log('Fetching slots for date:', date);
+
+        // Format date as YYYY-MM-DD for API
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         const dateStr = `${year}-${month}-${day}`;
 
-        // Mock Logic if Artist is null (Any Artist) or specific
         const artistId = this.artist?._id;
-
-        // If artist is selected, check their availability. 
-        // If "Any", technically we should check ALL artists, but that's complex.
-        // For "Any", let's assume valid slots are 10 AM to 6 PM.
-        // If specific artist, fetch their appointments and block slots.
+        console.log('Selected Artist ID:', artistId);
 
         if (artistId) {
+             // Check specific artist availability
             this.appointmentService.checkAvailability(artistId, dateStr, '').subscribe({
                 next: (bookedSlots: any[]) => {
+                    console.log('Booked slots from API:', bookedSlots);
                     this.generateSlots(bookedSlots);
                     this.loadingSlots = false;
+                    this.cdr.detectChanges();
                 },
                 error: (err) => {
-                    console.error(err);
+                    console.error('Error fetching availability:', err);
                     this.loadingSlots = false;
+                    // Fallback to generating empty slots if API fails, to at least show something
+                    this.generateSlots([]); 
+                    this.cdr.detectChanges();
                 }
             });
         } else {
-            // "Any" artist - simplified: just show all slots as available for now
-            // or fetch all shop appointments (not implemented).
+            // "Any Artist" - For now, show all slots as available
+            console.log('No artist selected (Any Artist), generating all slots.');
+            // Ideally we should check if *at least one* artist is available, but for now open all.
             this.generateSlots([]);
             this.loadingSlots = false;
+            this.cdr.detectChanges();
         }
     }
 
     generateSlots(bookedAppts: any[]) {
-        // Assume working hours 10:00 to 18:00 (6 PM)
+        console.log('Generating slots. Booked appointments:', bookedAppts);
+        
+        // Define working hours (e.g., 10 AM to 6 PM)
         const startHour = 10;
-        const endHour = 18;
-        const slots = [];
+        const endHour = 18; // 6 PM
+        const slots: any[] = [];
 
-        // Parse booked times
-        // Format: '10:00 AM' -> we need to normalize comparisons
+        // Normalize booked times for comparison
+        // Expected format from DB/API: "10:00 AM", "02:30 PM", etc.
         const bookedTimes = bookedAppts.map(appt => appt.time);
 
         for (let h = startHour; h < endHour; h++) {
+            // Create slots for :00 and :30
             for (let m of ['00', '30']) {
-                const hour12 = h > 12 ? h - 12 : h;
+                let hour12 = h > 12 ? h - 12 : h;
+                if (hour12 === 0) hour12 = 12; // Handle 12 PM corner case if needed, though loop starts at 10
+                
                 const ampm = h >= 12 ? 'PM' : 'AM';
-                const timeStr = `${hour12.toString().padStart(2, '0')}:${m} ${ampm}`;
+                const timeStr = `${hour12}:${m} ${ampm}`; // e.g., "10:00 AM"
 
+                // Check if this time matches any booked appointment time
                 const isBooked = bookedTimes.includes(timeStr);
 
                 slots.push({
@@ -328,7 +344,10 @@ export class TimeSelectionComponent implements OnInit {
                 });
             }
         }
+        
+        console.log('Generated slots:', slots);
         this.timeSlots = slots;
+        this.cdr.detectChanges(); // Force update
     }
 
     selectTime(slot: any) {
@@ -336,5 +355,9 @@ export class TimeSelectionComponent implements OnInit {
             this.selectedTime = slot.time;
             this.bookingState.updateState({ time: slot.time });
         }
+    }
+
+    getTotalPrice(): number {
+        return this.bookingState.getBookingTotal();
     }
 }

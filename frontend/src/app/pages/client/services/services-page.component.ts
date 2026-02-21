@@ -1,41 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { LandingHeaderComponent } from '../landing-page/components/header/header.component'; // Reuse header? Or create new? The designs are slightly different (logo color). I will reuse and maybe make transparent param if needed, or just duplicate for speed and safety given the specific color overrides. Ideally reuse, but the HTML demanded specific classes. I will stick to reusing the LandingHeaderComponent for now but the colors might mismatch.
-// WAIT - The request shows a header with different colors ("text-primary" which is now primary-bold, and different background opacity).
-// To follow the "pixel perfect" instruction, I should probably creating a dedicated header or modify the existing one.
-// The provided HTML header is: <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-[#fcf8f9]/80... border-b border-[#f3e7ea]...">
-// The Landing Page header was: <header class="sticky top-0 z-50 w-full transition-all duration-300"> <div class="absolute inset-0 bg-background-light/80...">
-// I'll create a simple ServicesHeaderComponent to match strictly.
 
 import { ServicesHeroComponent } from './components/service-hero/service-hero.component';
 import { ServicesFilterComponent } from './components/service-filter/service-filter.component';
 import { ServicesGridComponent } from './components/service-grid/service-grid.component';
 import { ServicesFooterComponent } from './components/service-footer/service-footer.component';
+import { ServiceService } from '../../../core/services/service.service';
 
 @Component({
     selector: 'app-services-page',
     standalone: true,
     imports: [
         CommonModule,
-        LandingHeaderComponent,
+
         ServicesHeroComponent,
         ServicesFilterComponent,
         ServicesGridComponent,
         ServicesFooterComponent
     ],
     template: `
-    <div class="min-h-screen flex flex-col bg-background-light dark:bg-background-dark font-display antialiased">
-        <app-landing-header></app-landing-header>
-        <main class="flex-grow flex flex-col items-center w-full pt-32">
-            <app-services-hero></app-services-hero>
-            <app-services-filter></app-services-filter>
-            <app-services-grid></app-services-grid>
-            <app-services-footer></app-services-footer>
-        </main>
+    <div class="flex flex-col items-center w-full">
+        <app-services-hero></app-services-hero>
+        <app-services-filter 
+            [categories]="categories" 
+            [activeCategory]="activeCategory"
+            (categorySelected)="filterServices($event)">
+        </app-services-filter>
+        <app-services-grid [services]="filteredServices"></app-services-grid>
+        <app-services-footer></app-services-footer>
     </div>
   `,
     styles: [`
+    :host {
+        display: block;
+        width: 100%;
+    }
     /* Subtly animated gradient background */
     :host {
         display: block;
@@ -46,4 +46,59 @@ import { ServicesFooterComponent } from './components/service-footer/service-foo
     }
   `]
 })
-export class ServicesPageComponent { }
+export class ServicesPageComponent implements OnInit {
+    services: any[] = [];
+    filteredServices: any[] = [];
+    categories: string[] = ['All'];
+    activeCategory: string = 'All';
+
+    constructor(
+        private serviceService: ServiceService,
+        private cdr: ChangeDetectorRef
+    ) {}
+
+    ngOnInit() {
+        this.serviceService.getServices().subscribe({
+            next: (data) => {
+                this.services = data;
+                this.filteredServices = [...data];
+                
+                // Extract unique categories correctly (handling arrays and comma-separated strings)
+                const allCategories = data.flatMap(service => {
+                    const cat = service.category;
+                    if (Array.isArray(cat)) {
+                        return cat.flatMap(c => c.split(','));
+                    }
+                    if (typeof cat === 'string') {
+                        return cat.split(',');
+                    }
+                    return [];
+                }).map(c => c.trim()).filter(c => c.length > 0);
+
+                const diverseCategories = new Set(allCategories);
+                this.categories = ['All', ...Array.from(diverseCategories)];
+
+                // Force update
+                this.cdr.detectChanges();
+            },
+            error: (err) => console.error('Error fetching services:', err)
+        });
+    }
+
+    filterServices(category: string) {
+        this.activeCategory = category;
+        if (category === 'All') {
+            this.filteredServices = [...this.services];
+        } else {
+            this.filteredServices = this.services.filter(service => {
+                const serviceCats = Array.isArray(service.category) 
+                    ? service.category.flatMap((c: string) => c.split(',')) 
+                    : (typeof service.category === 'string' ? service.category.split(',') : []);
+                
+                const cleanedCats = serviceCats.map((c: string) => c.trim());
+                return cleanedCats.includes(category);
+            });
+        }
+        this.cdr.detectChanges();
+    }
+}

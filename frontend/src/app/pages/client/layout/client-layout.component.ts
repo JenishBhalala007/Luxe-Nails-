@@ -38,13 +38,13 @@ import { AuthService } from '../../../core/services/auth.service';
                     <span class="material-symbols-outlined group-hover:text-dashboard-rose-gold transition-colors" style="font-size: 24px;">calendar_month</span>
                     <span class="text-base font-medium">Appointments</span>
                 </a>
-                <a routerLink="/client/gallery" routerLinkActive="bg-dashboard-bg-light dark:bg-white/5" class="group flex items-center gap-4 px-6 py-4 rounded-full text-dashboard-text-sub dark:text-gray-400 hover:bg-dashboard-bg-light dark:hover:bg-white/5 transition-all duration-300">
-                    <span class="material-symbols-outlined group-hover:text-dashboard-rose-gold transition-colors" style="font-size: 24px;">image</span>
-                    <span class="text-base font-medium">Gallery</span>
-                </a>
                 <a routerLink="/client/settings" routerLinkActive="bg-dashboard-bg-light dark:bg-white/5" class="group flex items-center gap-4 px-6 py-4 rounded-full text-dashboard-text-sub dark:text-gray-400 hover:bg-dashboard-bg-light dark:hover:bg-white/5 transition-all duration-300">
                     <span class="material-symbols-outlined group-hover:text-dashboard-rose-gold transition-colors" style="font-size: 24px;">settings</span>
                     <span class="text-base font-medium">Settings</span>
+                </a>
+                <a routerLink="/client/contact" routerLinkActive="bg-dashboard-bg-light dark:bg-white/5" class="group flex items-center gap-4 px-6 py-4 rounded-full text-dashboard-text-sub dark:text-gray-400 hover:bg-dashboard-bg-light dark:hover:bg-white/5 transition-all duration-300">
+                    <span class="material-symbols-outlined group-hover:text-dashboard-rose-gold transition-colors" style="font-size: 24px;">contact_support</span>
+                    <span class="text-base font-medium">Contact Us</span>
                 </a>
             </nav>
             <div class="p-8 border-t border-[#f4e6e9] dark:border-white/10">

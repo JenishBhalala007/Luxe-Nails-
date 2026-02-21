@@ -48,16 +48,16 @@ import { finalize, timeout } from 'rxjs/operators';
                                 <div class="hidden md:block w-1 h-1 rounded-full bg-dashboard-rose-gold/50"></div>
                                 <div class="flex items-center gap-2">
                                     <span class="material-symbols-outlined" style="font-size: 20px;">spa</span>
-                                    <span class="font-medium">{{ upcomingAppointment.service?.name }}</span>
+                                    <span class="font-medium">{{ getServiceNames(upcomingAppointment) }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="flex items-center gap-4" *ngIf="upcomingAppointment.artist">
                             <div class="flex -space-x-3 overflow-hidden">
-                                <div class="inline-block size-12 rounded-full ring-2 ring-white dark:ring-[#230f14] bg-cover bg-center" [style.backgroundImage]="'url(' + (upcomingAppointment.artist?.profileImage || 'assets/placeholder-user.jpg') + ')'"></div>
+                                <div class="inline-block size-12 rounded-full ring-2 ring-white dark:ring-[#230f14] bg-cover bg-center" [style.backgroundImage]="'url(' + (upcomingAppointment.artist?.profileImage || 'assets/placeholder-user.svg') + ')'"></div>
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-sm font-bold text-dashboard-text-main dark:text-white">{{ upcomingAppointment.artist?.name }}</span>
+                                <span class="text-sm font-bold text-dashboard-text-main dark:text-white">{{ getArtistDisplayName(upcomingAppointment) }}</span>
                                 <span class="text-xs text-dashboard-text-sub dark:text-gray-400">Your Artist</span>
                             </div>
                         </div>
@@ -70,7 +70,7 @@ import { finalize, timeout } from 'rxjs/operators';
             
             <section class="w-full text-center py-10" *ngIf="!upcomingAppointment && !loading">
                 <p class="text-gray-500">No upcoming appointments found.</p>
-                <a routerLink="/client/booking/service" class="text-dashboard-rose-gold font-bold hover:underline mt-2 inline-block">Book Now</a>
+                <a routerLink="/client/booking/services" [queryParams]="{reset: 'true'}" class="text-dashboard-rose-gold font-bold hover:underline mt-2 inline-block">Book Now</a>
             </section>
 
             <!-- Profile Details Card -->
@@ -131,12 +131,12 @@ import { finalize, timeout } from 'rxjs/operators';
                                         </div>
                                     </td>
                                     <td class="px-6 py-5 whitespace-nowrap">
-                                        <span class="text-sm font-medium text-dashboard-text-sub dark:text-gray-300">{{ appt.service?.name }}</span>
+                                        <span class="text-sm font-medium text-dashboard-text-sub dark:text-gray-300">{{ getServiceNames(appt) }}</span>
                                     </td>
                                     <td class="px-6 py-5 whitespace-nowrap">
                                         <div class="flex items-center gap-2">
-                                            <div class="size-6 rounded-full bg-cover bg-center" [style.backgroundImage]="'url(' + (appt.artist?.profileImage || 'assets/placeholder-user.jpg') + ')'"></div>
-                                            <span class="text-sm text-dashboard-text-sub dark:text-gray-300">{{ appt.artist?.name || 'Any Artist' }}</span>
+                                            <div class="size-6 rounded-full bg-cover bg-center" [style.backgroundImage]="'url(' + (appt.artist?.profileImage || 'assets/placeholder-user.svg') + ')'"></div>
+                                            <span class="text-sm text-dashboard-text-sub dark:text-gray-300">{{ getArtistDisplayName(appt) }}</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-5 whitespace-nowrap text-right">
@@ -207,18 +207,18 @@ export class ClientDashboardComponent implements OnInit {
                     const now = new Date();
                     now.setHours(0, 0, 0, 0);
 
-                    // Ascending sort for upcoming (Nearest first)
+                    // Filter strictly for future dates/times
                     const upcomingSorted = [...appointments].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
                     const future = upcomingSorted.filter(a => {
-                        const d = new Date(a.date);
-                        // 24h buffer
-                        const yesterday = now.getTime() - (24 * 60 * 60 * 1000);
-                        return d.getTime() >= yesterday && a.status !== 'cancelled' && a.status !== 'completed';
+                        if (a.status === 'cancelled' || a.status === 'completed') return false;
+                        return !this.isPast(a.date, a.time);
                     });
 
                     if (future.length > 0) {
                         this.upcomingAppointment = future[0];
+                    } else {
+                        this.upcomingAppointment = null;
                     }
 
                     // Recent Appointments Table: Show the last 5 appointments from the main sorted list (Date Desc)
@@ -232,5 +232,54 @@ export class ClientDashboardComponent implements OnInit {
                     this.loading = false;
                 }
             });
+    }
+
+    isPast(dateStr: string, timeStr: string): boolean {
+        const now = new Date();
+        const apptDate = new Date(dateStr);
+        
+        // Normalize dates to midnight for comparison
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        
+        const targetDate = new Date(apptDate);
+        targetDate.setHours(0,0,0,0);
+        
+        // If date is before today, it is past
+        if (targetDate.getTime() < today.getTime()) return true;
+        // If date is after today, it is future
+        if (targetDate.getTime() > today.getTime()) return false;
+        
+        // If same day, check time
+        if (!timeStr) return false; 
+
+        // Parse time (handle "14:30" or "2:30 PM")
+        let [hours, minutes] = timeStr.replace(/[^0-9:]/g, '').split(':').map(Number);
+        const isPM = timeStr.toLowerCase().includes('pm');
+        const isAM = timeStr.toLowerCase().includes('am');
+
+        if (isPM && hours < 12) hours += 12;
+        if (isAM && hours === 12) hours = 0;
+
+        const apptTime = new Date(today); // Use today's date
+        apptTime.setHours(hours, minutes, 0, 0);
+        
+        // Compare full timestamps
+        return apptTime.getTime() < now.getTime();
+    }
+
+    getServiceNames(appt: any): string {
+        if (appt.services && Array.isArray(appt.services) && appt.services.length > 0) {
+            return appt.services.map((s: any) => s.name).join(', ');
+        }
+        return appt.service?.name || 'Service'; // Fallback for legacy data
+    }
+
+    getArtistDisplayName(appt: any): string {
+        if (!appt) return 'Any Artist';
+        if (appt.isBroadcast) {
+            return appt.artist?.name ? `Any Artist Available Request (${appt.artist.name})` : 'Any Artist Available Request';
+        }
+        return appt.artist?.name || 'Any Artist';
     }
 }

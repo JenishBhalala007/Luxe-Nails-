@@ -1,11 +1,17 @@
-const Artist = require('../models/Artist');
+const User = require('../models/User');
 
 // @desc    Get all artists
 // @route   GET /api/artists
 // @access  Public
 const getArtists = async (req, res) => {
     try {
-        const artists = await Artist.find({ isActive: true });
+        // Fetch all artists with role 'artist'
+        let artists = await User.find({ role: 'artist' })
+            .select('-password');
+        
+        // Filter by isActive in memory to ensure reliability
+        artists = artists.filter(artist => artist.isActive === true);
+
         res.json(artists);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -17,7 +23,8 @@ const getArtists = async (req, res) => {
 // @access  Public
 const getArtistById = async (req, res) => {
     try {
-        const artist = await Artist.findById(req.params.id);
+        const artist = await User.findOne({ _id: req.params.id, role: 'artist' })
+            .select('-password');
         if (artist) {
             res.json(artist);
         } else {
@@ -28,21 +35,30 @@ const getArtistById = async (req, res) => {
     }
 };
 
-// @desc    Create an artist
+// @desc    Create an artist (Admin only)
 // @route   POST /api/artists
 // @access  Private/Admin
 const createArtist = async (req, res) => {
-    const { name, specialty, bio, imageUrl, workingHours } = req.body;
+    const { name, email, password, specialty, bio, imageUrl, workingHours } = req.body;
 
     try {
-        const artist = await Artist.create({
+        const artist = await User.create({
             name,
+            email,
+            password,
+            role: 'artist',
             specialty,
             bio,
             imageUrl,
-            workingHours
+            workingHours,
+            isActive: true
         });
-        res.status(201).json(artist);
+
+        // Remove password from response
+        const artistResponse = artist.toObject();
+        delete artistResponse.password;
+
+        res.status(201).json(artistResponse);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -52,10 +68,10 @@ const createArtist = async (req, res) => {
 // @route   PUT /api/artists/:id
 // @access  Private/Admin
 const updateArtist = async (req, res) => {
-    const { name, specialty, bio, imageUrl, workingHours, isActive } = req.body;
+    const { name, specialty, bio, imageUrl, workingHours, isActive, portfolio } = req.body;
 
     try {
-        const artist = await Artist.findById(req.params.id);
+        const artist = await User.findOne({ _id: req.params.id, role: 'artist' });
 
         if (artist) {
             artist.name = name || artist.name;
@@ -63,10 +79,14 @@ const updateArtist = async (req, res) => {
             artist.bio = bio || artist.bio;
             artist.imageUrl = imageUrl || artist.imageUrl;
             artist.workingHours = workingHours || artist.workingHours;
+            artist.portfolio = portfolio || artist.portfolio;
             if (isActive !== undefined) artist.isActive = isActive;
 
             const updatedArtist = await artist.save();
-            res.json(updatedArtist);
+            const artistResponse = updatedArtist.toObject();
+            delete artistResponse.password;
+
+            res.json(artistResponse);
         } else {
             res.status(404).json({ message: 'Artist not found' });
         }
@@ -80,7 +100,7 @@ const updateArtist = async (req, res) => {
 // @access  Private/Admin
 const deleteArtist = async (req, res) => {
     try {
-        const artist = await Artist.findById(req.params.id);
+        const artist = await User.findOne({ _id: req.params.id, role: 'artist' });
 
         if (artist) {
             await artist.deleteOne();

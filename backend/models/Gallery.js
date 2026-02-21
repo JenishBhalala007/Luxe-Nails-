@@ -16,9 +16,18 @@ const gallerySchema = new mongoose.Schema({
         type: String, // e.g., 'Nail Art', 'Manicure', 'Pedicure'
         required: true
     },
+    tags: [{
+        type: String
+    }],
+    duration: {
+        type: Number // in minutes, optional override/specific
+    },
+    price: {
+        type: Number // optional specific price
+    },
     artist: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Artist'
+        type: String, // Storing name directly for display flexibility
+        required: false
     }
 }, {
     timestamps: true

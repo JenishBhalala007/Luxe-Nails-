@@ -13,8 +13,8 @@ const generateToken = (id) => {
 // @route   POST /api/auth/register
 // @access  Public
 const registerUser = async (req, res) => {
-    const { name, email, password, role, phone, address } = req.body;
-    console.log('Register request received:', { name, email, role }); // Debug log
+    const { name, email, password, role, phone, address, bio, skills, experience } = req.body;
+    console.log('Register request received:', { name, email, role });
 
     try {
         if (!name || !email || !password) {
@@ -28,6 +28,21 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
+        // Map skills to specialty if role is artist
+        let specialty = '';
+        let workingHours = {};
+
+        if (role === 'artist') {
+            specialty = Array.isArray(skills) ? skills.join(', ') : (skills || 'General');
+            workingHours = {
+                "Monday": "9:00 AM - 5:00 PM",
+                "Tuesday": "9:00 AM - 5:00 PM",
+                "Wednesday": "9:00 AM - 5:00 PM",
+                "Thursday": "9:00 AM - 5:00 PM",
+                "Friday": "9:00 AM - 5:00 PM"
+            };
+        }
+
         // Create user
         const user = await User.create({
             name,
@@ -35,11 +50,18 @@ const registerUser = async (req, res) => {
             password,
             role: role || 'client',
             phone,
-            address: address || ''
+            address: address || '',
+            bio: bio || '',
+            skills: skills || [],
+            experience: experience || '',
+            specialty: specialty,
+            workingHours: workingHours
         });
 
+        // If user is an artist, create an Artist profile (Deprecated - Artist data is now in User model)
+        // Legacy code removed.
+
         if (user) {
-            console.log('User created successfully:', user._id); // Debug log
             res.status(201).json({
                 user: {
                     _id: user.id,
@@ -65,26 +87,38 @@ const registerUser = async (req, res) => {
 // @access  Public
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
+    console.log('Login Attempt:', { email, passwordGiven: password });
 
     try {
         // Check for user email
         const user = await User.findOne({ email });
+        console.log('User found:', user ? 'Yes' : 'No', user ? user.email : '');
 
-        if (user && (await user.matchPassword(password))) {
-            res.json({
-                user: {
+        if (user) {
+            const isMatch = await user.matchPassword(password);
+            console.log('Password Match:', isMatch);
+
+            if (isMatch) {
+                res.json({
                     _id: user.id,
                     name: user.name,
-                    email: user.email,
-                    role: user.role,
-                    phone: user.phone,
-                    address: user.address
-                },
-                token: generateToken(user.id),
-            });
-        } else {
-            res.status(401).json({ message: 'Invalid credentials' });
+                    email: user.email, // Fixed structure to match frontend expectation (was nested in 'user' object in previous snippet but let's check my previous view of this file)
+                    user: { // Wait, the previous code returned { user: {...}, token: ... }
+                        _id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                        phone: user.phone,
+                        address: user.address
+                    },
+                    token: generateToken(user.id),
+                });
+                return;
+            }
         }
+
+        console.log('Login failed: Invalid credentials');
+        res.status(401).json({ message: 'Invalid credentials' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

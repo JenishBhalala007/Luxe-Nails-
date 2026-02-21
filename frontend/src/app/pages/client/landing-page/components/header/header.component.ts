@@ -60,7 +60,7 @@ import { LoginRequiredModalComponent } from '../../../../../shared/components/lo
                 <!-- Profile Avatar (Visible if Logged In) -->
                 <div 
                     *ngIf="isLoggedIn()"
-                    routerLink="/client/dashboard"
+                    (click)="navigateToDashboard()"
                     class="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-sm cursor-pointer hover:ring-2 hover:ring-primary-bold transition-all flex items-center justify-center bg-[#ee2b58] text-white font-bold text-lg"
                 >
                     {{ user?.name?.charAt(0) || 'U' }}
@@ -93,7 +93,8 @@ export class LandingHeaderComponent implements OnInit {
         { label: 'Home', route: '/client/landing' },
         { label: 'Services', route: '/client/services' },
         { label: 'Artists', route: '/client/artists' },
-        { label: 'Gallery', route: '/client/gallery-public' }
+        { label: 'Gallery', route: '/client/gallery-public' },
+        { label: 'Contact', route: '/client/contact' }
     ];
 
     constructor(
@@ -109,7 +110,7 @@ export class LandingHeaderComponent implements OnInit {
 
     handleBookNow() {
         if (this.authService.isLoggedIn()) {
-            this.router.navigate(['/client/booking']);
+            this.router.navigate(['/client/booking/services'], { queryParams: { reset: 'true' } });
         } else {
             this.showLoginModal = true;
         }
@@ -121,5 +122,18 @@ export class LandingHeaderComponent implements OnInit {
 
     isLoggedIn(): boolean {
         return this.authService.isLoggedIn();
+    }
+
+    navigateToDashboard() {
+        const user = this.user || JSON.parse(localStorage.getItem('user') || '{}');
+        const role = (user.role || '').toLowerCase();
+        
+        if (role === 'admin') {
+            this.router.navigate(['/admin/dashboard']);
+        } else if (role === 'artist') {
+            this.router.navigate(['/artist/dashboard']);
+        } else {
+            this.router.navigate(['/client/dashboard']);
+        }
     }
 }

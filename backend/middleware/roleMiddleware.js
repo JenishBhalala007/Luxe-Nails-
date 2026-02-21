@@ -8,12 +8,12 @@ const admin = (req, res, next) => {
     }
 };
 
-const worker = (req, res, next) => {
-    if (req.user && (req.user.role === 'worker' || req.user.role === 'admin')) {
+const artist = (req, res, next) => {
+    if (req.user && (req.user.role === 'artist' || req.user.role === 'admin')) {
         next();
     } else {
-        res.status(401).json({ message: 'Not authorized as a worker' });
+        res.status(401).json({ message: 'Not authorized as an artist' });
     }
 };
 
-module.exports = { admin, worker };
+module.exports = { admin, artist };

@@ -9,7 +9,7 @@ import { AuthService } from '../../../core/services/auth.service';
     standalone: true,
     imports: [CommonModule, RouterLink, ReactiveFormsModule],
     template: `
-    <div class="relative flex h-screen min-h-[800px] w-full flex-col lg:flex-row overflow-hidden bg-background-light dark:bg-background-dark font-display antialiased">
+    <div class="relative flex h-screen w-full flex-col lg:flex-row overflow-hidden bg-background-light dark:bg-background-dark font-display antialiased">
         <!-- Left Side: Artistic Image -->
         <div class="relative w-full h-1/3 lg:h-full lg:w-1/2 overflow-hidden bg-gray-100 group">
             <!-- Background Image -->
@@ -26,7 +26,7 @@ import { AuthService } from '../../../core/services/auth.service';
         </div>
 
         <!-- Right Side: Registration Form -->
-        <div class="flex w-full flex-1 flex-col justify-center items-center bg-white dark:bg-background-dark px-4 py-8 sm:px-10 lg:w-1/2 lg:px-20 xl:px-32 overflow-y-auto">
+        <div class="flex w-full flex-1 flex-col justify-start items-center bg-white dark:bg-background-dark px-4 py-8 sm:px-10 lg:w-1/2 lg:px-20 xl:px-32 overflow-y-auto pt-10">
             <div class="w-full max-w-[480px] flex flex-col gap-8">
                 <!-- Header -->
                 <div class="text-center lg:text-left space-y-2">
@@ -36,29 +36,51 @@ import { AuthService } from '../../../core/services/auth.service';
                     <p class="text-gray-500 dark:text-gray-300 text-base font-normal">
                         Join our exclusive beauty community today.
                     </p>
+                    
+                    <!-- User/Artist Toggle -->
+                    <div class="flex justify-center lg:justify-start mb-2 mt-4 space-x-6 border-b border-gray-200 dark:border-gray-700">
+                        <div class="px-2 py-3 border-b-2 border-[#ffc1d0] text-[#1c0d10] dark:text-white font-medium text-sm transition-colors">
+                            User Sign Up
+                        </div>
+                        <a routerLink="/auth/artist-register" class="px-2 py-3 border-b-2 border-transparent text-gray-400 hover:text-[#1c0d10] dark:hover:text-white hover:border-gray-300 font-medium text-sm transition-colors cursor-pointer">
+                            Artist Sign Up
+                        </a>
+                    </div>
+
                     <p *ngIf="errorMessage" class="text-red-500 text-sm font-medium mt-2">{{ errorMessage }}</p>
                 </div>
 
                 <!-- Form -->
                 <form class="flex flex-col gap-9 mt-4" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                    <!-- Full Name Field -->
-                    <div class="relative">
-                        <input formControlName="name" class="floating-input peer block w-full appearance-none rounded-xl border border-gray-200 bg-transparent px-4 py-4 text-base text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 dark:border-gray-600 dark:focus:border-[#ffc1d0] h-[60px]" id="fullname" placeholder=" " type="text"/>
-                        <label class="pointer-events-none absolute left-4 top-4 z-10 origin-[0] -translate-y-0 text-sm text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-[#ffc1d0] dark:text-gray-400" for="fullname">
-                            Full Name
-                        </label>
-                    </div>
-                    <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.errors?.['required']" class="text-red-500 text-xs ml-4">
-                        Name is required
+                    <!-- Name Fields -->
+                    <div class="flex flex-col sm:flex-row gap-6 mt-2">
+                        <!-- First Name -->
+                        <div class="relative w-full">
+                            <input formControlName="firstName" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14" id="firstName" placeholder="First Name" type="text"/>
+                            <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                            <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="firstName">First Name</label>
+                            <div *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.errors?.['required']" class="text-red-500 text-xs ml-2 mt-1">
+                                Required
+                            </div>
+                        </div>
+                        
+                        <!-- Last Name -->
+                        <div class="relative w-full">
+                            <input formControlName="lastName" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14" id="lastName" placeholder="Last Name" type="text"/>
+                            <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                            <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="lastName">Last Name</label>
+                            <div *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.errors?.['required']" class="text-red-500 text-xs ml-2 mt-1">
+                                Required
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Email Field -->
-                    <div class="relative">
-                        <input formControlName="email" class="floating-input peer block w-full appearance-none rounded-xl border border-gray-200 bg-transparent px-4 py-4 text-base text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 dark:border-gray-600 dark:focus:border-[#ffc1d0] h-[60px]" id="email" placeholder=" " type="email"/>
-                        <label class="pointer-events-none absolute left-4 top-4 z-10 origin-[0] -translate-y-0 text-sm text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-[#ffc1d0] dark:text-gray-400" for="email">
-                            Email Address
-                        </label>
-                        <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <div class="relative mt-2">
+                        <input formControlName="email" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14 pr-10" id="email" placeholder="Email Address" type="email"/>
+                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                        <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="email">Email Address</label>
+                        <div class="absolute right-0 top-4 text-gray-400 pointer-events-none">
                             <span class="material-symbols-outlined text-[20px]">mail</span>
                         </div>
                     </div>
@@ -70,12 +92,11 @@ import { AuthService } from '../../../core/services/auth.service';
                     </div>
 
                     <!-- Phone Field -->
-                    <div class="relative">
-                        <input formControlName="phone" class="floating-input peer block w-full appearance-none rounded-xl border border-gray-200 bg-transparent px-4 py-4 text-base text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 dark:border-gray-600 dark:focus:border-[#ffc1d0] h-[60px]" id="phone" placeholder=" " type="tel"/>
-                        <label class="pointer-events-none absolute left-4 top-4 z-10 origin-[0] -translate-y-0 text-sm text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-[#ffc1d0] dark:text-gray-400" for="phone">
-                            Phone Number
-                        </label>
-                         <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <div class="relative mt-2">
+                        <input formControlName="phone" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14 pr-10" id="phone" placeholder="Phone Number" type="tel"/>
+                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                        <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="phone">Phone Number</label>
+                        <div class="absolute right-0 top-4 text-gray-400 pointer-events-none">
                             <span class="material-symbols-outlined text-[20px]">phone</span>
                         </div>
                     </div>
@@ -84,12 +105,11 @@ import { AuthService } from '../../../core/services/auth.service';
                     </div>
 
                     <!-- Address Field -->
-                    <div class="relative">
-                        <input formControlName="address" class="floating-input peer block w-full appearance-none rounded-xl border border-gray-200 bg-transparent px-4 py-4 text-base text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 dark:border-gray-600 dark:focus:border-[#ffc1d0] h-[60px]" id="address" placeholder=" " type="text"/>
-                        <label class="pointer-events-none absolute left-4 top-4 z-10 origin-[0] -translate-y-0 text-sm text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-[#ffc1d0] dark:text-gray-400" for="address">
-                            Address
-                        </label>
-                        <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <div class="relative mt-2">
+                        <input formControlName="address" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14 pr-10" id="address" placeholder="Address" type="text"/>
+                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                        <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="address">Address</label>
+                        <div class="absolute right-0 top-4 text-gray-400 pointer-events-none">
                            <span class="material-symbols-outlined text-[20px]">location_on</span>
                         </div>
                     </div>
@@ -99,12 +119,11 @@ import { AuthService } from '../../../core/services/auth.service';
 
 
                     <!-- Password Field -->
-                    <div class="relative">
-                        <input formControlName="password" class="floating-input peer block w-full appearance-none rounded-xl border border-gray-200 bg-transparent px-4 py-4 text-base text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 dark:border-gray-600 dark:focus:border-[#ffc1d0] h-[60px]" id="password" placeholder=" " [type]="showPassword ? 'text' : 'password'"/>
-                        <label class="pointer-events-none absolute left-4 top-4 z-10 origin-[0] -translate-y-0 text-sm text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-[#ffc1d0] dark:text-gray-400" for="password">
-                            Create Password
-                        </label>
-                        <button class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#ffc1d0] dark:hover:text-white transition-colors" type="button" (click)="togglePassword()">
+                    <div class="relative mt-2">
+                        <input formControlName="password" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14 pr-10" id="password" placeholder="Create Password" [type]="showPassword ? 'text' : 'password'"/>
+                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                        <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="password">Create Password</label>
+                        <button class="absolute right-0 top-4 text-gray-400 hover:text-[#ffc1d0] transition-colors" type="button" (click)="togglePassword()">
                             <span class="material-symbols-outlined text-[20px]">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
                         </button>
                     </div>
@@ -147,7 +166,7 @@ import { AuthService } from '../../../core/services/auth.service';
             </div>
         </div>
     </div>
-  `
+    `
 })
 export class RegisterComponent {
     registerForm: FormGroup;
@@ -161,7 +180,8 @@ export class RegisterComponent {
         private router: Router
     ) {
         this.registerForm = this.fb.group({
-            name: ['', Validators.required],
+            firstName: ['', Validators.required],
+            lastName: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             phone: ['', Validators.required],
             address: ['', Validators.required],
@@ -178,7 +198,12 @@ export class RegisterComponent {
             this.isLoading = true;
             this.errorMessage = '';
 
-            this.authService.register(this.registerForm.value).subscribe({
+            const formData = {
+                ...this.registerForm.value,
+                name: `${this.registerForm.value.firstName} ${this.registerForm.value.lastName}`
+            };
+
+            this.authService.register(formData).subscribe({
                 next: (res) => {
                     this.isLoading = false;
                     // Navigate to home page on success

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
     private userSubject = new BehaviorSubject<any>(null);
     public user$ = this.userSubject.asObservable();
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private router: Router) {
         // Init user from localStorage to prevent flash of empty state
         const savedUser = localStorage.getItem('user');
         if (savedUser) {
@@ -72,6 +73,7 @@ export class AuthService {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         this.userSubject.next(null);
+        this.router.navigate(['/auth/login']);
     }
 
     getToken() {

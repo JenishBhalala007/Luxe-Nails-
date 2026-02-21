@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LandingHeaderComponent } from '../landing-page/components/header/header.component';
+
+import { ActivatedRoute } from '@angular/router';
 import { DetailContentComponent } from './components/detail-content/detail-content.component';
 import { DetailRelatedComponent } from './components/detail-related/detail-related.component';
 import { DetailFooterComponent } from './components/detail-footer/detail-footer.component';
@@ -10,24 +11,32 @@ import { DetailFooterComponent } from './components/detail-footer/detail-footer.
     standalone: true,
     imports: [
         CommonModule,
-        LandingHeaderComponent,
+
         DetailContentComponent,
         DetailRelatedComponent,
         DetailFooterComponent
     ],
     template: `
-    <div class="flex flex-col min-h-screen bg-background-light dark:bg-background-dark text-text-main dark:text-[#f3e7ea] font-body overflow-x-hidden antialiased">
-        <app-landing-header></app-landing-header>
-        <main class="flex flex-col min-h-screen pt-32">
-             <!-- Since the HTML content was quite large and monolithic, I've split it:
-                  Detail Content covers the breadcrumb + hero/image + info
-                  Detail Related covers the 'More by Jessica W.' section
-             -->
-             <app-detail-content></app-detail-content>
-             <app-detail-related></app-detail-related>
-             <app-detail-footer></app-detail-footer>
-        </main>
+    <div class="flex flex-col font-body overflow-x-hidden antialiased">
+         <app-detail-content [itemId]="itemId"></app-detail-content>
+         <app-detail-related></app-detail-related>
+         <app-detail-footer></app-detail-footer>
     </div>
-  `
+  `,
+    styles: [`
+        :host {
+            display: block;
+            width: 100%;
+        }
+    `]
 })
-export class GalleryDetailPageComponent { }
+export class GalleryDetailPageComponent implements OnInit {
+    private route = inject(ActivatedRoute);
+    itemId: string | null = null;
+
+    ngOnInit() {
+        this.route.paramMap.subscribe(params => {
+            this.itemId = params.get('id');
+        });
+    }
+}

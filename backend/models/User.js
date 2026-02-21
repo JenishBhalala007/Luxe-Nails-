@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['client', 'admin', 'worker'],
+        enum: ['client', 'admin', 'artist'],
         default: 'client'
     },
     phone: {
@@ -26,15 +26,53 @@ const userSchema = new mongoose.Schema({
     address: {
         type: String,
         default: ''
+    },
+    bio: {
+        type: String,
+        default: ''
+    },
+    skills: {
+        type: [String],
+        default: []
+    },
+    experience: {
+        type: String,
+        default: ''
+    },
+    // Artist Specific Fields
+    specialty: {
+        type: String, // e.g. "Gel Polish, Acrylics"
+        default: ''
+    },
+    imageUrl: {
+        type: String,
+        default: ''
+    },
+    workingHours: {
+        type: Map,
+        of: String,
+        default: {}
+    },
+    isActive: {
+        type: Boolean,
+        default: true
+    },
+    portfolio: {
+        type: [String],
+        default: []
+    },
+    basePrice: {
+        type: Number,
+        default: 200
     }
 }, {
     timestamps: true
 });
 
 // Encrypt password using bcrypt
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function () {
     if (!this.isModified('password')) {
-        next();
+        return;
     }
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);

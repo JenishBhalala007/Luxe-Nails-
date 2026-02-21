@@ -35,7 +35,9 @@ app.use('/api/services', require('./routes/serviceRoutes'));
 app.use('/api/artists', require('./routes/artistRoutes'));
 app.use('/api/gallery', require('./routes/galleryRoutes'));
 app.use('/api/appointments', require('./routes/appointmentRoutes'));
-// app.use('/api/users', require('./routes/userRoutes')); // Reserved for admin user management
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/messages', require('./routes/messageRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
 
 // Basic error handler
 app.use((err, req, res, next) => {

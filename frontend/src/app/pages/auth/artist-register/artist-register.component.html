@@ -1,0 +1,178 @@
+<div
+    class="relative flex h-screen w-full flex-col lg:flex-row overflow-hidden bg-background-light dark:bg-background-dark font-display antialiased">
+    <!-- Left Side: Artistic Image -->
+    <div class="relative w-full h-1/3 lg:h-full lg:w-1/2 overflow-hidden bg-gray-100 group">
+        <!-- Background Image -->
+        <div class="absolute inset-0 h-full w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBwcIQoyb3CaEBgEOU3VgQS0F0T__r84gZcxFyaewTOfGtnXjZaO15jQ-z-dPYrV9bxhmsMZzAPrmtmCfQ4oH6yub-pB4xWJVPk9WjJQ__zfGKkTDBpBsAONjyETgJFGkhRwcnZ3RAfNH7Guzgf4hd2H7pdCVBGfr_OXv_vgZ2Vba8Szs9pkLdToQbnHaBs9nG0rBaR4jT7xyobMawm_D3J4FPYetgxF-m1qJr_WBTVg2xFkMBOYZOm9vcvZoTbefBFkUxF1oBptMWE');">
+        </div>
+        <!-- Subtle Overlay -->
+        <div class="absolute inset-0 bg-[#ffc1d0]/10 dark:bg-black/40 mix-blend-overlay"></div>
+        <!-- Optional: Quote or Brand element overlaid on image -->
+        <div class="absolute bottom-10 left-10 hidden lg:block">
+            <p class="text-white/90 font-serif text-3xl italic leading-tight max-w-md drop-shadow-md">
+                "Experience the art of luxury."
+            </p>
+        </div>
+    </div>
+
+    <!-- Right Side: Registration Form -->
+    <div
+        class="flex w-full flex-1 flex-col justify-start items-center bg-white dark:bg-background-dark px-4 py-8 sm:px-10 lg:w-1/2 lg:px-20 xl:px-32 overflow-y-auto pt-10">
+        <div class="w-full max-w-[480px] flex flex-col gap-8">
+            <!-- Header -->
+            <div class="text-center lg:text-left space-y-2">
+                <h1 class="text-[#1c0d10] dark:text-white font-serif text-4xl lg:text-5xl font-semibold tracking-tight">
+                    Apply as an Artist
+                </h1>
+                <p class="text-gray-500 dark:text-gray-300 text-base font-normal">
+                    Ready to showcase your talent? Fill out the form below.
+                </p>
+            </div>
+
+            <!-- User/Artist Toggle -->
+            <div class="flex justify-center lg:justify-start -mt-4 mb-2 relative z-50 space-x-6 border-b border-gray-200 dark:border-gray-700">
+                <a routerLink="/auth/register" class="px-2 py-3 border-b-2 border-transparent text-gray-400 hover:text-[#1c0d10] dark:hover:text-white hover:border-gray-300 font-medium text-sm transition-colors cursor-pointer">
+                    User Sign Up
+                </a>
+                <div class="px-2 py-3 border-b-2 border-[#ffc1d0] text-[#1c0d10] dark:text-white font-medium text-sm transition-colors">
+                    Artist Sign Up
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div class="text-center lg:text-left">
+                <p *ngIf="errorMessage" class="text-red-500 text-sm font-medium mt-2">{{ errorMessage }}</p>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <form class="flex flex-col gap-9 mt-4" [formGroup]="artistForm" (ngSubmit)="onSubmit()">
+            <div class="space-y-6">
+                <h3
+                    class="text-sm font-bold text-[#1c0d10] dark:text-gray-200 uppercase tracking-wider mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
+                    Personal Details
+                </h3>
+
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- First Name -->
+                    <div class="relative flex-1 mt-2">
+                        <input formControlName="firstName" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14" id="firstName" placeholder="First Name" type="text"/>
+                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                        <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="firstName">First Name</label>
+                    </div>
+                    <!-- Last Name -->
+                    <div class="relative flex-1 mt-2">
+                        <input formControlName="lastName" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14" id="lastName" placeholder="Last Name" type="text"/>
+                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                        <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="lastName">Last Name</label>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="relative mt-2">
+                    <input formControlName="email" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14 pr-10" id="email" placeholder="Email Address" type="email"/>
+                    <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                    <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="email">Email Address</label>
+                    <div class="absolute right-0 top-4 text-gray-400 pointer-events-none">
+                        <span class="material-symbols-outlined text-[20px]">mail</span>
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="relative mt-2">
+                    <input formControlName="phone" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14 pr-10" id="phone" placeholder="Phone Number" type="tel"/>
+                    <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                    <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="phone">Phone Number</label>
+                    <div class="absolute right-0 top-4 text-gray-400 pointer-events-none">
+                        <span class="material-symbols-outlined text-[20px]">phone</span>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="relative mt-2">
+                    <input formControlName="password" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14 pr-10" id="password" placeholder="Password" [type]="showPassword ? 'text' : 'password'"/>
+                    <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                    <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="password">Password</label>
+                    <button class="absolute right-0 top-4 text-gray-400 hover:text-[#ffc1d0] transition-colors" type="button" (click)="togglePassword()">
+                        <span class="material-symbols-outlined text-[20px]">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-6 pt-4">
+                <h3
+                    class="text-sm font-bold text-[#1c0d10] dark:text-gray-200 uppercase tracking-wider mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
+                    Professional Experience
+                </h3>
+
+                <div class="relative mt-2">
+                    <select formControlName="experience" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base transition-all duration-300 outline-none ring-0 h-14 pr-10 cursor-pointer" id="experience" required
+                        [class.text-transparent]="!artistForm.get('experience')?.value"
+                        [class.text-[#1c0d10]]="artistForm.get('experience')?.value"
+                        [class.dark:text-white]="artistForm.get('experience')?.value">
+                        <option disabled selected value="" class="hidden"></option>
+                        <option value="entry" class="text-[#1c0d10]">Less than 1 year</option>
+                        <option value="junior" class="text-[#1c0d10]">1-3 years</option>
+                        <option value="mid" class="text-[#1c0d10]">3-5 years</option>
+                        <option value="senior" class="text-[#1c0d10]">5+ years</option>
+                        <option value="expert" class="text-[#1c0d10]">10+ years</option>
+                    </select>
+                    <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                    <label class="absolute top-4 left-0 pointer-events-none origin-[0] transform text-base duration-300 font-medium z-0"
+                        [class.-translate-y-6]="artistForm.get('experience')?.value"
+                        [class.scale-75]="artistForm.get('experience')?.value"
+                        [class.text-gray-400]="!artistForm.get('experience')?.value"
+                        [class.text-[#ffc1d0]]="artistForm.get('experience')?.dirty || artistForm.get('experience')?.touched"
+                        for="experience">Years of Experience</label>
+                    <div class="absolute right-0 top-4 pointer-events-none text-gray-400">
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </div>
+                </div>
+
+                <!-- Skills Pills -->
+                <div class="mt-4">
+                    <p class="text-[#1c0d10] dark:text-gray-300 font-medium mb-3">Select your skills</p>
+                    <div class="flex flex-wrap gap-3">
+                        <label class="pill-label cursor-pointer" *ngFor="let skill of skillsList">
+                            <input class="pill-checkbox hidden" type="checkbox" [value]="skill.value"
+                                (change)="onCheckboxChange($event)" />
+                            <div
+                                class="px-5 py-2 rounded-full border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-500 dark:text-gray-400 hover:border-[#ffc1d0]/50 select-none transition-all">
+                                {{ skill.name }}
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Bio Section -->
+                <div class="mt-8 relative">
+                    <textarea formControlName="bio" class="peer block w-full appearance-none rounded-xl border-2 border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 px-4 py-3 text-base text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 resize-none transition-colors outline-none ring-0 h-32" id="bio" placeholder=" " required></textarea>
+                    <label class="absolute top-3 left-4 pointer-events-none origin-[0] -translate-y-8 scale-75 transform text-base bg-white dark:bg-[#1E1E1E] px-1 text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-8 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="bio">Bio (Tell us about yourself)</label>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col gap-4">
+                <button [disabled]="artistForm.invalid || isLoading"
+                    class="flex w-full items-center justify-center rounded-xl bg-[#ffc1d0] h-14 px-8 text-base font-bold text-[#1c0d10] shadow-lg shadow-[#ffc1d0]/20 transition-all hover:bg-[#ffc1d0]/90 hover:shadow-[#ffc1d0]/30 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                    type="submit">
+                    <span *ngIf="!isLoading">Submit Application</span>
+                    <span *ngIf="isLoading">Submitting...</span>
+                </button>
+
+            </div>
+        </form>
+
+        <!-- Footer -->
+        <div class="text-center">
+            <p class="text-gray-500 dark:text-gray-400 text-sm">
+                Already have an account?
+                <a routerLink="/auth/login"
+                    class="font-semibold text-[#1c0d10] hover:text-[#ffc1d0] transition-colors dark:text-white dark:hover:text-[#ffc1d0]">
+                    Log in
+                </a>
+            </p>
+        </div>
+    </div>
+</div>

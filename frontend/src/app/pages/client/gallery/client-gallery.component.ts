@@ -20,11 +20,32 @@ import { GalleryFooterComponent } from '../gallery/components/gallery-footer/gal
         <main class="flex flex-col">
             <!-- Reuse existing gallery components but without the header -->
             <app-gallery-hero></app-gallery-hero>
-            <app-gallery-filter></app-gallery-filter>
-            <app-gallery-masonry></app-gallery-masonry>
+            <app-gallery-filter 
+                [categories]="categories" 
+                [activeCategory]="activeCategory"
+                (categorySelected)="onCategorySelected($event)">
+            </app-gallery-filter>
+            <app-gallery-masonry [activeCategory]="activeCategory"></app-gallery-masonry>
             <app-gallery-footer></app-gallery-footer>
         </main>
     </div>
   `
 })
-export class ClientGalleryComponent { }
+export class ClientGalleryComponent {
+    categories: string[] = [
+        'All',
+        'Nail Polish',
+        'Nail Design',
+        'Gel Polish',
+        'Gel & Ombre',
+        'French Nails',
+        'Acrylic Nails',
+        'Mylar Nails',
+        'Removal & Repair'
+    ];
+    activeCategory: string = 'All';
+
+    onCategorySelected(category: string) {
+        this.activeCategory = category;
+    }
+}

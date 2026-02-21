@@ -8,13 +8,21 @@ const appointmentSchema = new mongoose.Schema({
     },
     artist: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Artist'
+        ref: 'User'
     },
-    service: {
+    declinedBy: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    services: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Service',
         required: true
-    },
+    }],
+    nailDesigns: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Gallery'
+    }],
     date: {
         type: Date,
         required: true
@@ -38,6 +46,10 @@ const appointmentSchema = new mongoose.Schema({
     },
     totalAmount: {
         type: Number
+    },
+    isBroadcast: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

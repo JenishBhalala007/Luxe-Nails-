@@ -10,24 +10,9 @@ import { AppointmentService } from '../../../../../core/services/appointment.ser
     standalone: true,
     imports: [CommonModule, RouterLink, FormsModule],
     template: `
-    <div class="flex-1 w-full bg-booking-bg-light dark:bg-booking-bg-dark flex justify-center py-10 px-4 md:px-8">
+    <div class="flex-1 w-full bg-background-light dark:bg-background-dark flex justify-center py-10 px-4 md:px-8">
         <div class="w-full max-w-[960px] flex flex-col gap-8">
-            <!-- Breadcrumbs -->
-            <nav class="flex flex-wrap gap-2 px-4 justify-center md:justify-start">
-                <a routerLink="/client/booking/service" class="text-booking-rose-gold/70 hover:text-primary transition-colors text-sm font-medium leading-normal flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[18px]">check_circle</span> Service
-                </a>
-                <span class="text-booking-rose-gold/40 text-sm font-medium leading-normal">/</span>
-                <a routerLink="/client/booking/artists" class="text-booking-rose-gold/70 hover:text-primary transition-colors text-sm font-medium leading-normal flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[18px]">check_circle</span> Artist
-                </a>
-                <span class="text-booking-rose-gold/40 text-sm font-medium leading-normal">/</span>
-                <a routerLink="/client/booking/time" class="text-booking-rose-gold/70 hover:text-primary transition-colors text-sm font-medium leading-normal flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[18px]">check_circle</span> Time
-                </a>
-                <span class="text-booking-rose-gold/40 text-sm font-medium leading-normal">/</span>
-                <span class="text-primary text-sm font-bold leading-normal border-b-2 border-primary pb-0.5">Confirm</span>
-            </nav>
+
 
             <!-- Page Heading -->
             <div class="flex flex-col gap-2 px-4 text-center md:text-left">
@@ -41,31 +26,57 @@ import { AppointmentService } from '../../../../../core/services/appointment.ser
             </div>
 
             <!-- Main Card -->
-            <div class="bg-white dark:bg-[#2a1418] rounded-xl shadow-lg border border-[#f3e7e9] dark:border-[#3a1d22] overflow-hidden" *ngIf="service">
+            <div class="bg-white dark:bg-[#2a1418] rounded-xl shadow-lg border border-[#f3e7e9] dark:border-[#3a1d22] overflow-hidden" *ngIf="selectedServices.length > 0">
                 <!-- Details List -->
                 <div class="flex flex-col">
-                    <!-- Service Item -->
-                    <div class="group flex items-center gap-4 px-6 md:px-8 py-6 justify-between border-b border-[#f3e7e9] dark:border-[#3a1d22] hover:bg-[#fcf8f9] dark:hover:bg-[#32181d] transition-colors">
-                        <div class="flex items-center gap-4 md:gap-6">
-                            <div class="text-primary flex items-center justify-center rounded-xl bg-primary/10 shrink-0 size-14">
-                                <span class="material-symbols-outlined text-[28px]">brush</span>
+                    
+                    <!-- Services Header -->
+                    <div class="px-6 md:px-8 py-4 bg-gray-50 dark:bg-[#32181d] border-b border-[#f3e7e9] dark:border-[#3a1d22] flex justify-between items-center">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Services</h3>
+                        <button routerLink="/client/booking/service" class="text-primary text-sm hover:underline">Edit</button>
+                    </div>
+
+                    <!-- Service Items -->
+                    <div *ngFor="let service of selectedServices" class="group flex items-center gap-4 px-6 md:px-8 py-4 border-b border-[#f3e7e9] dark:border-[#3a1d22] hover:bg-[#fcf8f9] dark:hover:bg-[#32181d] transition-colors">
+                        <div class="flex items-center gap-4 md:gap-6 w-full">
+                            <div class="text-[#ea5b7a] flex items-center justify-center rounded-xl bg-primary/10 shrink-0 size-12">
+                                <span class="material-symbols-outlined text-[24px]">brush</span>
                             </div>
                             <div class="flex flex-col justify-center gap-1">
-                                <p class="text-[#888] dark:text-[#aaa] text-xs font-semibold uppercase tracking-wider">Service</p>
                                 <p class="text-[#1b0d10] dark:text-white text-lg font-bold leading-tight">{{ service.name }}</p>
-                                <p class="text-booking-rose-gold text-sm font-medium">₹{{ service.price }} • {{ service.duration }} min</p>
+                                <p class="text-booking-rose-gold text-sm font-medium">
+                                    {{ service.priceRange && service.priceRange.min !== service.priceRange.max ? '₹' + service.priceRange.min + ' - ₹' + service.priceRange.max : '₹' + service.price }} • {{ service.timeRange && service.timeRange.min !== service.timeRange.max ? service.timeRange.min + ' - ' + service.timeRange.max : service.duration }} min
+                                </p>
                             </div>
                         </div>
-                        <button routerLink="/client/booking/service" class="shrink-0 text-gray-400 hover:text-primary transition-colors p-2 rounded-full hover:bg-primary/5">
-                            <span class="material-symbols-outlined">edit</span>
-                        </button>
+                    </div>
+
+                    <!-- Nail Designs Header -->
+                    <div class="px-6 md:px-8 py-4 bg-gray-50 dark:bg-[#32181d] border-b border-[#f3e7e9] dark:border-[#3a1d22] flex justify-between items-center" *ngIf="selectedNailDesigns.length > 0">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Nail Designs</h3>
+                        <button routerLink="/client/booking/nails" class="text-primary text-sm hover:underline">Edit</button>
+                    </div>
+
+                    <!-- Nail Design Items -->
+                    <div *ngFor="let design of selectedNailDesigns" class="group flex items-center gap-4 px-6 md:px-8 py-4 border-b border-[#f3e7e9] dark:border-[#3a1d22] hover:bg-[#fcf8f9] dark:hover:bg-[#32181d] transition-colors">
+                        <div class="flex items-center gap-4 md:gap-6 w-full">
+                             <div class="bg-center bg-no-repeat bg-cover rounded-xl size-12 shrink-0 shadow-sm border border-gray-200 dark:border-white/10" 
+                                  [style.backgroundImage]="'url(' + (design.imageUrl || 'assets/placeholder-nail.jpg') + ')'"></div>
+                            <div class="flex flex-col justify-center gap-1">
+                                <p class="text-[#1b0d10] dark:text-white text-lg font-bold leading-tight">{{ design.title }}</p>
+                                <p class="text-xs text-gray-500">
+                                    {{ design.category }} 
+                                    <span *ngIf="design.price" class="text-booking-rose-gold font-medium ml-1">(+₹{{ design.price }})</span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Artist Item -->
                     <div class="group flex items-center gap-4 px-6 md:px-8 py-6 justify-between border-b border-[#f3e7e9] dark:border-[#3a1d22] hover:bg-[#fcf8f9] dark:hover:bg-[#32181d] transition-colors">
                         <div class="flex items-center gap-4 md:gap-6">
                              <div class="bg-center bg-no-repeat bg-cover rounded-xl size-14 shrink-0 shadow-sm border border-gray-200 dark:border-white/10" 
-                                  [style.backgroundImage]="'url(' + (artist?.profileImage || 'assets/placeholder-user.jpg') + ')'"></div>
+                                  [style.backgroundImage]="'url(' + (artist?.profileImage || 'assets/placeholder-user.svg') + ')'"></div>
                             <div class="flex flex-col justify-center gap-1">
                                 <p class="text-[#888] dark:text-[#aaa] text-xs font-semibold uppercase tracking-wider">Artist</p>
                                 <p class="text-[#1b0d10] dark:text-white text-lg font-bold leading-tight">{{ artist ? artist.name : 'Any Available Artist' }}</p>
@@ -83,7 +94,7 @@ import { AppointmentService } from '../../../../../core/services/appointment.ser
                     <!-- Date & Time Item -->
                     <div class="group flex items-center gap-4 px-6 md:px-8 py-6 justify-between border-b border-[#f3e7e9] dark:border-[#3a1d22] hover:bg-[#fcf8f9] dark:hover:bg-[#32181d] transition-colors">
                         <div class="flex items-center gap-4 md:gap-6">
-                            <div class="text-primary flex items-center justify-center rounded-xl bg-primary/10 shrink-0 size-14">
+                            <div class="text-[#ea5b7a] flex items-center justify-center rounded-xl bg-primary/10 shrink-0 size-14">
                                 <span class="material-symbols-outlined text-[28px]">calendar_month</span>
                             </div>
                             <div class="flex flex-col justify-center gap-1">
@@ -114,10 +125,10 @@ import { AppointmentService } from '../../../../../core/services/appointment.ser
                         <h3 class="text-[#1b0d10] dark:text-white text-sm font-bold uppercase tracking-wider">Payment Method</h3>
                         <div class="flex flex-col gap-3">
                             <label class="relative flex items-center justify-between p-4 rounded-lg border cursor-pointer transition-all"
-                                   [ngClass]="paymentMethod === 'card' ? 'border-primary bg-primary/5' : 'border-gray-200 dark:border-[#4a242a] hover:bg-gray-50 dark:hover:bg-[#32181d]'">
+                                   [ngClass]="paymentMethod === 'card' ? 'border-[#ea5b7a] bg-primary/10' : 'border-gray-200 dark:border-[#4a242a] hover:bg-gray-50 dark:hover:bg-[#32181d]'">
                                 <div class="flex items-center gap-3">
                                     <div class="flex items-center justify-center size-5 rounded-full border" 
-                                         [ngClass]="paymentMethod === 'card' ? 'border-primary bg-primary text-white' : 'border-gray-300 dark:border-gray-600'">
+                                         [ngClass]="paymentMethod === 'card' ? 'border-primary bg-primary text-[#1b0d10]' : 'border-gray-300 dark:border-gray-600'">
                                         <span *ngIf="paymentMethod === 'card'" class="material-symbols-outlined text-[14px] font-bold">check</span>
                                     </div>
                                     <div class="flex flex-col">
@@ -130,10 +141,10 @@ import { AppointmentService } from '../../../../../core/services/appointment.ser
                             </label>
 
                             <label class="relative flex items-center justify-between p-4 rounded-lg border cursor-pointer transition-all"
-                                   [ngClass]="paymentMethod === 'cash' ? 'border-primary bg-primary/5' : 'border-gray-200 dark:border-[#4a242a] hover:bg-gray-50 dark:hover:bg-[#32181d]'">
+                                   [ngClass]="paymentMethod === 'cash' ? 'border-[#ea5b7a] bg-primary/10' : 'border-gray-200 dark:border-[#4a242a] hover:bg-gray-50 dark:hover:bg-[#32181d]'">
                                 <div class="flex items-center gap-3">
                                     <div class="flex items-center justify-center size-5 rounded-full border"
-                                          [ngClass]="paymentMethod === 'cash' ? 'border-primary bg-primary text-white' : 'border-gray-300 dark:border-gray-600'">
+                                          [ngClass]="paymentMethod === 'cash' ? 'border-primary bg-primary text-[#1b0d10]' : 'border-gray-300 dark:border-gray-600'">
                                         <span *ngIf="paymentMethod === 'cash'" class="material-symbols-outlined text-[14px] font-bold">check</span>
                                     </div>
                                     <div class="flex flex-col">
@@ -152,13 +163,21 @@ import { AppointmentService } from '../../../../../core/services/appointment.ser
                         <h3 class="text-[#1b0d10] dark:text-white text-sm font-bold uppercase tracking-wider">Order Summary</h3>
                         <div class="bg-booking-bg-light dark:bg-[#1a0b0e] rounded-lg p-5 flex flex-col gap-3">
                             <div class="flex justify-between items-center text-sm">
-                                <span class="text-gray-600 dark:text-gray-400">Service Price</span>
-                                <span class="text-[#1b0d10] dark:text-white font-medium">₹{{ service.price }}</span>
+                                <span class="text-gray-600 dark:text-gray-400">Services Total</span>
+                                <span class="text-[#1b0d10] dark:text-white font-medium">₹{{ getServicesTotal() }} <span class="text-xs font-normal text-gray-500">(Pay at Venue)</span></span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm" *ngIf="artist">
+                                <span class="text-gray-600 dark:text-gray-400">Artist Fee</span>
+                                <span class="text-[#1b0d10] dark:text-white font-medium">₹{{ artist.basePrice || 200 }}</span>
+                            </div>
+                             <div class="flex justify-between items-center text-sm" *ngIf="selectedNailDesigns.length > 0">
+                                <span class="text-gray-600 dark:text-gray-400">Designs Total</span>
+                                <span class="text-[#1b0d10] dark:text-white font-medium">₹{{ getDesignsTotal() }}</span>
                             </div>
                             <div class="h-px bg-gray-200 dark:bg-[#3a1d22] my-1"></div>
                             <div class="flex justify-between items-center text-lg">
                                 <span class="text-[#1b0d10] dark:text-white font-bold">Total</span>
-                                <span class="text-primary font-black">₹{{ service.price }}</span>
+                                <span class="text-[#ea5b7a] font-black">₹{{ getTotalPrice() }}</span>
                             </div>
                             <div class="mt-2 text-xs text-center text-gray-500 dark:text-gray-400 bg-white dark:bg-[#2a1418] py-2 px-3 rounded border border-gray-100 dark:border-[#3a1d22] flex items-center justify-center gap-1">
                                 <span class="material-symbols-outlined text-[14px]">lock</span>
@@ -173,7 +192,7 @@ import { AppointmentService } from '../../../../../core/services/appointment.ser
                     <button routerLink="/client/booking/time" class="text-sm font-bold text-gray-500 hover:text-[#1b0d10] dark:hover:text-white transition-colors flex items-center gap-1 order-2 md:order-1">
                         <span class="material-symbols-outlined text-[18px]">arrow_back</span> Back
                     </button>
-                    <button (click)="confirmBooking()" [disabled]="processing" class="w-full md:w-auto order-1 md:order-2 bg-gradient-to-r from-primary to-[#ff5c7a] hover:from-[#d62642] hover:to-[#ee2b4b] text-white text-lg font-bold py-4 px-12 rounded-lg shadow-lg shadow-primary/30 transition-all transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-wait">
+                    <button (click)="confirmBooking()" [disabled]="processing" class="w-full md:w-auto order-1 md:order-2 bg-gradient-to-r from-primary to-[#ffb0c4] hover:from-[#ffb0c4] hover:to-[#ea5b7a] text-[#1b0d10] text-lg font-bold py-4 px-12 rounded-lg shadow-lg shadow-primary/30 transition-all transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-wait">
                         <span *ngIf="!processing">Confirm Appointment</span>
                         <span *ngIf="processing">Processing...</span>
                         <span *ngIf="!processing" class="material-symbols-outlined">check</span>
@@ -186,7 +205,8 @@ import { AppointmentService } from '../../../../../core/services/appointment.ser
     // No dedicated style file or it works with utility classes
 })
 export class ReviewSelectionComponent implements OnInit {
-    service: any;
+    selectedServices: any[] = [];
+    selectedNailDesigns: any[] = [];
     artist: any;
     date: Date | null = null;
     time: string | null = null;
@@ -204,12 +224,13 @@ export class ReviewSelectionComponent implements OnInit {
 
     ngOnInit() {
         const state = this.bookingState.getState();
-        this.service = state.service;
+        this.selectedServices = state.services || [];
+        this.selectedNailDesigns = state.nailDesigns || [];
         this.artist = state.artist;
         this.date = state.date;
         this.time = state.time;
 
-        if (!this.service || !this.date || !this.time) {
+        if (this.selectedServices.length === 0 || !this.date || !this.time) {
             this.router.navigate(['/client/booking/service']);
         }
     }
@@ -219,21 +240,34 @@ export class ReviewSelectionComponent implements OnInit {
         return date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
     }
 
+    getServicesTotal(): number {
+        return this.selectedServices.reduce((sum, s) => sum + (s.price || 0), 0);
+    }
+
+    getDesignsTotal(): number {
+        return this.selectedNailDesigns.reduce((sum, d) => sum + (d.price || 0), 0);
+    }
+
+    getTotalPrice(): number {
+        return this.bookingState.getBookingTotal();
+    }
+
     confirmBooking() {
-        if (!this.service || !this.date || !this.time) return;
+        if (this.selectedServices.length === 0 || !this.date || !this.time) return;
 
         this.processing = true;
         this.error = null;
 
         const appointmentData = {
-            serviceId: this.service._id,
+            services: this.selectedServices.map(s => s._id),
+            nailDesigns: this.selectedNailDesigns.map(d => d._id),
             artistId: this.artist ? this.artist._id : null,
             // Use local date formatting manually
-            date: `${this.date.getFullYear()}-${String(this.date.getMonth() + 1).padStart(2, '0')}-${String(this.date.getDate()).padStart(2, '0')}`,
+            date: `${this.date!.getFullYear()}-${String(this.date!.getMonth() + 1).padStart(2, '0')}-${String(this.date!.getDate()).padStart(2, '0')}`,
             time: this.time,
             notes: this.notes,
             paymentMethod: this.paymentMethod,
-            totalAmount: this.service.price
+            totalAmount: this.getTotalPrice()
         };
 
         this.appointmentService.createAppointment(appointmentData).subscribe({
@@ -242,12 +276,11 @@ export class ReviewSelectionComponent implements OnInit {
                 // Navigate to appointments
                 this.router.navigate(['/client/appointments']);
                 // Or clear state
-                this.bookingState.updateState({ service: null, artist: null, date: null, time: null });
+                this.bookingState.updateState({ services: [], nailDesigns: [], artist: null, date: null, time: null });
             },
             error: (err) => {
                 this.processing = false;
                 this.error = err.error?.message || 'Booking failed';
-                alert(this.error || 'Booking failed');
             }
         });
     }

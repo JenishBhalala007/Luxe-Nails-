@@ -4,11 +4,12 @@ const {
     getGalleryItems,
     getGalleryItemById,
     createGalleryItem,
-    deleteGalleryItem
+    deleteGalleryItem,
+    updateGalleryItem
 } = require('../controllers/galleryController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
 router.route('/').get(getGalleryItems).post(protect, admin, createGalleryItem);
-router.route('/:id').get(getGalleryItemById).delete(protect, admin, deleteGalleryItem);
+router.route('/:id').get(getGalleryItemById).put(protect, admin, updateGalleryItem).delete(protect, admin, deleteGalleryItem);
 
 module.exports = router;

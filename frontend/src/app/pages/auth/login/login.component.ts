@@ -33,20 +33,18 @@ import { AuthService } from '../../../core/services/auth.service';
                 <!-- Form -->
                 <form class="flex flex-col gap-5" (ngSubmit)="login()">
                     <!-- Email Field -->
-                    <div class="relative group">
-                        <input [(ngModel)]="email" name="email" class="floating-input peer block w-full rounded-lg border border-gray-200 bg-white dark:bg-gray-800/50 px-4 pt-6 pb-2 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:ring-1 focus:ring-[#ffc1d0] focus:outline-none placeholder-transparent h-14 shadow-sm transition-all" id="email" placeholder="name@example.com" type="email" required/>
-                        <label class="floating-label absolute left-4 top-4 z-10 origin-[0] -translate-y-0 scale-100 text-gray-400 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-85 pointer-events-none" for="email">
-                            Email Address
-                        </label>
+                    <div class="relative">
+                        <input [(ngModel)]="email" name="email" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14" id="email" placeholder="Email Address" type="email" required/>
+                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                        <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="email">Email Address</label>
                     </div>
 
                     <!-- Password Field -->
-                    <div class="relative group">
-                        <input [(ngModel)]="password" name="password" class="floating-input peer block w-full rounded-lg border border-gray-200 bg-white dark:bg-gray-800/50 px-4 pt-6 pb-2 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:ring-1 focus:ring-[#ffc1d0] focus:outline-none placeholder-transparent h-14 shadow-sm transition-all" id="password" placeholder="Password" type="password" required/>
-                        <label class="floating-label absolute left-4 top-4 z-10 origin-[0] -translate-y-0 scale-100 text-gray-400 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-85 pointer-events-none" for="password">
-                            Password
-                        </label>
-                        <button class="absolute right-4 top-3.5 text-gray-400 hover:text-[#ffc1d0] transition-colors" type="button">
+                    <div class="relative mt-2">
+                        <input [(ngModel)]="password" name="password" class="peer block w-full appearance-none border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent px-0 py-2.5 text-[#1c0d10] dark:text-white focus:border-[#ffc1d0] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 text-base placeholder-transparent transition-all duration-300 outline-none ring-0 h-14 pr-10" id="password" placeholder="Password" type="password" required/>
+                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-[#ffc1d0] transition-all duration-300 peer-focus:w-full"></div>
+                        <label class="absolute top-4 left-0 pointer-events-none origin-[0] -translate-y-6 scale-75 transform text-base text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#ffc1d0] font-medium" for="password">Password</label>
+                        <button class="absolute right-0 top-4 text-gray-400 hover:text-[#ffc1d0] transition-colors" type="button">
                             <span class="material-symbols-outlined text-xl">visibility_off</span>
                         </button>
                     </div>
@@ -99,19 +97,15 @@ export class LoginComponent {
         if (this.email && this.password) {
             this.authService.login({ email: this.email, password: this.password }).subscribe({
                 next: (res) => {
-                    console.log('Login successful', res);
-                    // Check user role and redirect accordingly
-                    const role = res.role;
-                    if (role === 'admin') {
-                        this.router.navigate(['/admin/dashboard']);
-                    } else if (role === 'worker') {
-                        this.router.navigate(['/worker/dashboard']);
+                    console.log('Login successful, Response:', res);
+                    if (res.token) {
+                        console.log('Token saved to localStorage:', localStorage.getItem('token'));
                     } else {
-                        // Default to home page for clients
-                        this.router.navigate(['/client/landing']);
-                        // Or if you prefer the home page for clients: 
-                        // this.router.navigate(['/client/landing']);
+                        console.error('Login response missing token!');
                     }
+
+                    // Redirect all users to the landing page (Home)
+                    this.router.navigate(['/client/landing']);
                 },
                 error: (err) => {
                     console.error('Login failed', err);

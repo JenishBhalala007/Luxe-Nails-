@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -6,38 +6,47 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     imports: [CommonModule],
     template: `
-    <section class="sticky top-[73px] z-40 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-transparent transition-all duration-300" id="filter-bar">
+    <section class="sticky top-[73px] z-40 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-rose-200/50 dark:border-white/5 transition-all duration-300" id="filter-bar">
         <div class="px-4 py-4 flex justify-center">
-            <div class="flex gap-3 overflow-x-auto no-scrollbar max-w-[960px] w-full pb-2">
-                <!-- Active Filter -->
-                <button class="flex shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white h-10 pl-4 pr-5 transition-all hover:shadow-md hover:shadow-primary/25 ring-2 ring-offset-2 ring-transparent active:ring-primary">
-                    <span class="material-symbols-outlined text-[20px]">grid_view</span>
-                    <span class="text-sm font-bold">All</span>
-                </button>
-                <!-- Inactive Filters -->
-                <button class="flex shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark hover:bg-rose-100 dark:hover:bg-[#4a2a33] text-text-main dark:text-white h-10 pl-4 pr-5 border border-rose-100 dark:border-[#4a2a33] transition-all group">
-                    <span class="material-symbols-outlined text-[20px] text-primary group-hover:scale-110 transition-transform">favorite</span>
-                    <span class="text-sm font-medium">Bridal</span>
-                </button>
-                <button class="flex shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark hover:bg-rose-100 dark:hover:bg-[#4a2a33] text-text-main dark:text-white h-10 pl-4 pr-5 border border-rose-100 dark:border-[#4a2a33] transition-all group">
-                    <span class="material-symbols-outlined text-[20px] text-primary group-hover:scale-110 transition-transform">auto_awesome</span>
-                    <span class="text-sm font-medium">Abstract</span>
-                </button>
-                <button class="flex shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark hover:bg-rose-100 dark:hover:bg-[#4a2a33] text-text-main dark:text-white h-10 pl-4 pr-5 border border-rose-100 dark:border-[#4a2a33] transition-all group">
-                    <span class="material-symbols-outlined text-[20px] text-primary group-hover:scale-110 transition-transform">wb_sunny</span>
-                    <span class="text-sm font-medium">Pastel</span>
-                </button>
-                <button class="flex shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark hover:bg-rose-100 dark:hover:bg-[#4a2a33] text-text-main dark:text-white h-10 pl-4 pr-5 border border-rose-100 dark:border-[#4a2a33] transition-all group">
-                    <span class="material-symbols-outlined text-[20px] text-primary group-hover:scale-110 transition-transform">bolt</span>
-                    <span class="text-sm font-medium">Neon</span>
-                </button>
-                <button class="flex shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark hover:bg-rose-100 dark:hover:bg-[#4a2a33] text-text-main dark:text-white h-10 pl-4 pr-5 border border-rose-100 dark:border-[#4a2a33] transition-all group">
-                    <span class="material-symbols-outlined text-[20px] text-primary group-hover:scale-110 transition-transform">circle</span>
-                    <span class="text-sm font-medium">Minimalist</span>
+            <div class="flex gap-3 overflow-x-auto no-scrollbar max-w-[1280px] w-full pb-2 justify-start sm:justify-center">
+                <button *ngFor="let category of categories"
+                    (click)="selectCategory(category)"
+                    [class.bg-primary]="activeCategory === category"
+                    [class.text-white]="activeCategory === category"
+                    [class.shadow-md]="activeCategory === category"
+                    [class.shadow-primary/25]="activeCategory === category"
+                    [class.ring-2]="activeCategory === category"
+                    [class.ring-offset-2]="activeCategory === category"
+                    [class.ring-transparent]="activeCategory === category"
+                    
+                    [class.bg-white]="activeCategory !== category"
+                    [class.dark:bg-surface-dark]="activeCategory !== category"
+                    [class.hover:bg-rose-100]="activeCategory !== category"
+                    [class.dark:hover:bg-[#4a2a33]]="activeCategory !== category"
+                    [class.text-text-main]="activeCategory !== category"
+                    [class.dark:text-white]="activeCategory !== category"
+                    [class.border]="activeCategory !== category"
+                    [class.border-rose-100]="activeCategory !== category"
+                    [class.dark:border-[#4a2a33]]="activeCategory !== category"
+                    
+                    class="flex shrink-0 items-center justify-center gap-x-2 rounded-full h-10 px-6 transition-all group active:ring-primary whitespace-nowrap">
+                    
+                    <!-- Icon Mapping (Optional: You can add a method to get icon based on category if needed, or just text) -->
+                    <!-- <span *ngIf="category === 'All'" class="material-symbols-outlined text-[20px]">grid_view</span> -->
+                    
+                    <span class="text-sm font-bold">{{ category }}</span>
                 </button>
             </div>
         </div>
     </section>
   `
 })
-export class GalleryFilterComponent { }
+export class GalleryFilterComponent {
+    @Input() categories: string[] = [];
+    @Input() activeCategory: string = 'All';
+    @Output() categorySelected = new EventEmitter<string>();
+
+    selectCategory(category: string) {
+        this.categorySelected.emit(category);
+    }
+}

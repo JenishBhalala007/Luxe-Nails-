@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../core/services/auth.service';
+import { AdminService } from '../../../core/services/admin.service';
+import { ServiceService } from '../../../core/services/service.service';
 
 @Component({
     selector: 'app-admin-dashboard',
@@ -18,7 +21,7 @@ import { CommonModule } from '@angular/common';
             </button>
         </header>
         <!-- Sidebar -->
-        <aside class="w-64 flex-shrink-0 flex flex-col bg-white border-r border-[#f0e6e9] h-full z-20 shadow-soft">
+        <aside class="w-64 flex-shrink-0 flex flex-col bg-white border-r border-[#f0e6e9] h-full z-20 shadow-soft hidden md:flex">
             <div class="h-20 flex items-center px-8">
                 <div class="flex items-center gap-3">
                     <div class="text-2xl text-luxe-text">
@@ -37,6 +40,10 @@ import { CommonModule } from '@angular/common';
                     <span class="material-symbols-outlined group-hover:text-primary transition-colors">calendar_month</span>
                     <span class="text-sm font-medium">Bookings</span>
                 </a>
+                <a class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-luxe-text-muted hover:bg-[#fff0f4] hover:text-primary transition-colors group" href="/admin/messages">
+                    <span class="material-symbols-outlined group-hover:text-primary transition-colors">chat_bubble</span>
+                    <span class="text-sm font-medium">Messages</span>
+                </a>
                 <a class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-luxe-text-muted hover:bg-[#fff0f4] hover:text-primary transition-colors group" href="/admin/users">
                     <span class="material-symbols-outlined group-hover:text-primary transition-colors">group</span>
                     <span class="text-sm font-medium">Users</span>
@@ -52,7 +59,7 @@ import { CommonModule } from '@angular/common';
             </nav>
             
             <div class="p-4 border-t border-[#f0e6e9]">
-                <button class="flex items-center gap-3 px-4 py-3 rounded-xl w-full text-luxe-text-muted hover:bg-gray-50 transition-colors">
+                <button (click)="logout()" class="flex items-center gap-3 px-4 py-3 rounded-xl w-full text-luxe-text-muted hover:bg-gray-50 transition-colors">
                     <span class="material-symbols-outlined">logout</span>
                     <span class="text-sm font-medium">Log out</span>
                 </button>
@@ -78,11 +85,11 @@ import { CommonModule } from '@angular/common';
                     <!-- Profile -->
                     <div class="flex items-center gap-3 cursor-pointer">
                         <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center border-2 border-white shadow-sm text-primary font-bold text-lg">
-                            MJ
+                            {{ getInitials(currentUser?.name || 'Admin') }}
                         </div>
                         <div class="hidden lg:flex flex-col">
-                            <span class="text-sm font-bold text-luxe-text leading-tight">Sarah Jenkins</span>
-                            <span class="text-xs text-luxe-text-muted">Manager</span>
+                            <span class="text-sm font-bold text-luxe-text leading-tight">{{ currentUser?.name || 'Admin' }}</span>
+                            <span class="text-xs text-luxe-text-muted uppercase">{{ currentUser?.role }}</span>
                         </div>
                         <span class="material-symbols-outlined text-luxe-text-muted text-[18px]">expand_more</span>
                     </div>
@@ -94,29 +101,23 @@ import { CommonModule } from '@angular/common';
                 <div class="max-w-[1200px] mx-auto flex flex-col gap-8">
                     <!-- Stats Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                        <!-- Revenue -->
+                        <!-- Total Clients -->
                         <div class="bg-white p-6 rounded-xl shadow-card flex items-start justify-between group hover:-translate-y-1 transition-transform duration-300">
                             <div class="flex flex-col gap-2">
-                                <p class="text-luxe-text-muted text-sm font-medium">Total Revenue</p>
-                                <p class="text-2xl font-serif font-bold text-luxe-text">₹45,000</p>
-                                <div class="flex items-center gap-1 text-[#078859] text-xs font-semibold bg-[#e6f4ed] w-fit px-2 py-1 rounded-lg">
-                                    <span class="material-symbols-outlined text-[14px]">trending_up</span>
-                                    <span>+12%</span>
-                                </div>
+                                <p class="text-luxe-text-muted text-sm font-medium">Total Clients</p>
+                                <p class="text-2xl font-serif font-bold text-luxe-text" *ngIf="!loadingStats">{{ stats?.totalClients || 0 }}</p>
+                                <p class="text-2xl font-serif font-bold text-gray-300 animate-pulse" *ngIf="loadingStats">--</p>
                             </div>
-                            <div class="w-12 h-12 rounded-full bg-[#FFF9EB] flex items-center justify-center text-luxe-gold">
-                                <span class="material-symbols-outlined">payments</span>
+                            <div class="w-12 h-12 rounded-full bg-[#EBF5FE] flex items-center justify-center text-[#3B82F6]">
+                                <span class="material-symbols-outlined">group_add</span>
                             </div>
                         </div>
                         <!-- Bookings -->
                         <div class="bg-white p-6 rounded-xl shadow-card flex items-start justify-between group hover:-translate-y-1 transition-transform duration-300">
                             <div class="flex flex-col gap-2">
                                 <p class="text-luxe-text-muted text-sm font-medium">Total Bookings</p>
-                                <p class="text-2xl font-serif font-bold text-luxe-text">128</p>
-                                <div class="flex items-center gap-1 text-[#078859] text-xs font-semibold bg-[#e6f4ed] w-fit px-2 py-1 rounded-lg">
-                                    <span class="material-symbols-outlined text-[14px]">trending_up</span>
-                                    <span>+5%</span>
-                                </div>
+                                <p class="text-2xl font-serif font-bold text-luxe-text" *ngIf="!loadingStats">{{ stats?.totalBookings || 0 }}</p>
+                                <p class="text-2xl font-serif font-bold text-gray-300 animate-pulse" *ngIf="loadingStats">--</p>
                             </div>
                             <div class="w-12 h-12 rounded-full bg-[#FFEFF3] flex items-center justify-center text-luxe-pink">
                                 <span class="material-symbols-outlined">calendar_month</span>
@@ -125,12 +126,9 @@ import { CommonModule } from '@angular/common';
                         <!-- Active Workers -->
                         <div class="bg-white p-6 rounded-xl shadow-card flex items-start justify-between group hover:-translate-y-1 transition-transform duration-300">
                             <div class="flex flex-col gap-2">
-                                <p class="text-luxe-text-muted text-sm font-medium">Active Workers</p>
-                                <p class="text-2xl font-serif font-bold text-luxe-text">8</p>
-                                <div class="flex items-center gap-1 text-luxe-text-muted text-xs font-semibold bg-gray-100 w-fit px-2 py-1 rounded-lg">
-                                    <span class="material-symbols-outlined text-[14px]">remove</span>
-                                    <span>0%</span>
-                                </div>
+                                <p class="text-luxe-text-muted text-sm font-medium">Total Workers</p>
+                                <p class="text-2xl font-serif font-bold text-luxe-text" *ngIf="!loadingStats">{{ stats?.totalWorkers || 0 }}</p>
+                                <p class="text-2xl font-serif font-bold text-gray-300 animate-pulse" *ngIf="loadingStats">--</p>
                             </div>
                             <div class="w-12 h-12 rounded-full bg-[#F3F0FF] flex items-center justify-center text-luxe-lavender">
                                 <span class="material-symbols-outlined">group</span>
@@ -139,11 +137,16 @@ import { CommonModule } from '@angular/common';
                         <!-- Pending Actions -->
                         <div class="bg-white p-6 rounded-xl shadow-card flex items-start justify-between group hover:-translate-y-1 transition-transform duration-300">
                             <div class="flex flex-col gap-2">
-                                <p class="text-luxe-text-muted text-sm font-medium">Pending Actions</p>
-                                <p class="text-2xl font-serif font-bold text-luxe-text">5</p>
-                                <div class="flex items-center gap-1 text-[#078859] text-xs font-semibold bg-[#e6f4ed] w-fit px-2 py-1 rounded-lg">
-                                    <span class="material-symbols-outlined text-[14px]">trending_up</span>
-                                    <span>+2%</span>
+                                <p class="text-luxe-text-muted text-sm font-medium">Pending Requests</p>
+                                <p class="text-2xl font-serif font-bold text-luxe-text" *ngIf="!loadingStats">{{ stats?.pendingRequests || 0 }}</p>
+                                <p class="text-2xl font-serif font-bold text-gray-300 animate-pulse" *ngIf="loadingStats">--</p>
+                                <div *ngIf="stats?.pendingRequests > 0" class="flex items-center gap-1 text-[#C4320A] text-xs font-semibold bg-[#FFECE5] w-fit px-2 py-1 rounded-lg">
+                                    <span class="material-symbols-outlined text-[14px]">priority_high</span>
+                                    <span>Needs Attention</span>
+                                </div>
+                                <div *ngIf="stats?.pendingRequests === 0" class="flex items-center gap-1 text-[#078859] text-xs font-semibold bg-[#e6f4ed] w-fit px-2 py-1 rounded-lg">
+                                    <span class="material-symbols-outlined text-[14px]">check</span>
+                                    <span>All Caught Up</span>
                                 </div>
                             </div>
                             <div class="w-12 h-12 rounded-full bg-[#FFF4EC] flex items-center justify-center text-luxe-orange">
@@ -158,8 +161,8 @@ import { CommonModule } from '@angular/common';
                         <div class="flex-1 lg:w-[60%] bg-white p-8 rounded-xl shadow-card flex flex-col">
                             <div class="flex items-center justify-between mb-6">
                                 <div>
-                                    <h3 class="text-lg font-serif font-bold text-luxe-text">Revenue Curve</h3>
-                                    <p class="text-sm text-luxe-text-muted">Sales performance over last 7 days</p>
+                                    <h3 class="text-lg font-serif font-bold text-luxe-text">Appointment Curve</h3>
+                                    <p class="text-sm text-luxe-text-muted">Booking volume over last 7 days</p>
                                 </div>
                                 <button class="p-2 rounded-lg hover:bg-gray-50 text-luxe-text-muted">
                                     <span class="material-symbols-outlined">more_horiz</span>
@@ -212,135 +215,93 @@ import { CommonModule } from '@angular/common';
                                 </div>
                             </div>
                             <div class="flex-1 flex flex-col justify-center gap-6">
-                                <!-- Item 1 -->
-                                <div class="flex flex-col gap-2">
+                                <div class="flex flex-col gap-2" *ngFor="let srv of topServices; let i = index">
                                     <div class="flex justify-between items-center">
-                                        <span class="text-sm font-bold text-luxe-text">Gel Manicure</span>
-                                        <span class="text-xs font-semibold text-luxe-text-muted">45%</span>
+                                        <span class="text-sm font-bold text-luxe-text">{{ srv.name }}</span>
+                                        <span class="text-xs font-semibold text-luxe-text-muted">{{ srv.percentage }}%</span>
                                     </div>
                                     <div class="h-2 w-full bg-[#f3e7ea] rounded-full overflow-hidden">
-                                        <div class="h-full bg-primary rounded-full w-[45%]"></div>
+                                        <div class="h-full rounded-full" [ngClass]="getServiceColorClass(i)" [style.width.%]="srv.percentage"></div>
                                     </div>
                                 </div>
-                                <!-- Item 2 -->
-                                <div class="flex flex-col gap-2">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-sm font-bold text-luxe-text">Acrylics</span>
-                                        <span class="text-xs font-semibold text-luxe-text-muted">30%</span>
-                                    </div>
-                                    <div class="h-2 w-full bg-[#f3e7ea] rounded-full overflow-hidden">
-                                        <div class="h-full bg-luxe-lavender rounded-full w-[30%]"></div>
-                                    </div>
-                                </div>
-                                <!-- Item 3 -->
-                                <div class="flex flex-col gap-2">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-sm font-bold text-luxe-text">Pedicure Deluxe</span>
-                                        <span class="text-xs font-semibold text-luxe-text-muted">15%</span>
-                                    </div>
-                                    <div class="h-2 w-full bg-[#f3e7ea] rounded-full overflow-hidden">
-                                        <div class="h-full bg-luxe-gold rounded-full w-[15%]"></div>
-                                    </div>
-                                </div>
-                                <!-- Item 4 -->
-                                <div class="flex flex-col gap-2">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-sm font-bold text-luxe-text">Nail Art</span>
-                                        <span class="text-xs font-semibold text-luxe-text-muted">10%</span>
-                                    </div>
-                                    <div class="h-2 w-full bg-[#f3e7ea] rounded-full overflow-hidden">
-                                        <div class="h-full bg-luxe-orange rounded-full w-[10%]"></div>
-                                    </div>
+                                <div *ngIf="topServices.length === 0" class="text-sm text-luxe-text-muted text-center py-4">
+                                    No services available.
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Recent Activity Table -->
-                    <div class="bg-white rounded-xl shadow-card overflow-hidden">
-                        <div class="p-6 border-b border-[#f0e6e9] flex justify-between items-center">
-                            <h3 class="text-lg font-serif font-bold text-luxe-text">Live Activity Feed</h3>
-                            <button class="text-sm text-primary font-bold hover:underline">View All</button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead class="bg-[#faf8f9]">
-                                    <tr>
-                                        <th class="px-6 py-4 text-left text-xs font-bold text-luxe-text-muted uppercase tracking-wider">Event</th>
-                                        <th class="px-6 py-4 text-left text-xs font-bold text-luxe-text-muted uppercase tracking-wider">User / Client</th>
-                                        <th class="px-6 py-4 text-left text-xs font-bold text-luxe-text-muted uppercase tracking-wider">Time</th>
-                                        <th class="px-6 py-4 text-left text-xs font-bold text-luxe-text-muted uppercase tracking-wider">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-[#f0e6e9]">
-                                    <tr class="hover:bg-[#faf8f9] transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center">
-                                                    <span class="material-symbols-outlined text-[16px]">book_online</span>
-                                                </div>
-                                                <span class="text-sm font-semibold text-luxe-text">New Booking</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-luxe-text-muted">Emily Rose</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-luxe-text-muted">2 mins ago</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Confirmed</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-[#faf8f9] transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center">
-                                                    <span class="material-symbols-outlined text-[16px]">person_add</span>
-                                                </div>
-                                                <span class="text-sm font-semibold text-luxe-text">New User</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-luxe-text-muted">Jessica M.</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-luxe-text-muted">15 mins ago</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Pending</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-[#faf8f9] transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center">
-                                                    <span class="material-symbols-outlined text-[16px]">reviews</span>
-                                                </div>
-                                                <span class="text-sm font-semibold text-luxe-text">New Review</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-luxe-text-muted">Sarah Connor</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-luxe-text-muted">1 hour ago</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">New</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-[#faf8f9] transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center">
-                                                    <span class="material-symbols-outlined text-[16px]">cancel</span>
-                                                </div>
-                                                <span class="text-sm font-semibold text-luxe-text">Cancellation</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-luxe-text-muted">Monica Hall</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-luxe-text-muted">3 hours ago</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">Refunded</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </main>
     </div>
     `
 })
-export class AdminDashboardComponent { }
+export class AdminDashboardComponent implements OnInit {
+    currentUser: any;
+    stats: any = null;
+    loadingStats: boolean = true;
+    topServices: any[] = [];
+    serviceColors: string[] = ['bg-primary', 'bg-luxe-lavender', 'bg-luxe-gold', 'bg-luxe-orange'];
+
+    constructor(
+        private authService: AuthService,
+        private adminService: AdminService,
+        private serviceService: ServiceService,
+        private cdr: ChangeDetectorRef
+    ) { }
+
+    ngOnInit() {
+        this.authService.user$.subscribe(user => {
+            this.currentUser = user;
+        });
+
+        this.adminService.getDashboardStats().subscribe({
+            next: (data) => {
+                console.log('Admin Stats Fetched:', data);
+                this.stats = data;
+                this.loadingStats = false;
+                this.cdr.detectChanges();
+            },
+            error: (err) => {
+                console.error('Failed to load admin stats', err);
+                this.loadingStats = false;
+                this.cdr.detectChanges();
+            }
+        });
+
+        this.serviceService.getServices().subscribe({
+            next: (data) => {
+                if (data && Array.isArray(data)) {
+                    // Assign hypothetical percentages just to maintain the UI structure
+                    const percentages = [45, 30, 15, 10]; 
+                    this.topServices = data.slice(0, 4).map((s, index) => ({
+                        name: s.name,
+                        percentage: percentages[index] || 5
+                    }));
+                    this.cdr.detectChanges();
+                }
+            },
+            error: (err) => console.error('Error fetching services for dashboard:', err)
+        });
+    }
+
+    logout() {
+        this.authService.logout();
+    }
+
+    getInitials(name: string): string {
+        return name
+            .trim()
+            .split(/\s+/)
+            .map(n => n[0])
+            .join('')
+            .toUpperCase()
+            .substring(0, 2);
+    }
+    
+    getServiceColorClass(index: number): string {
+        return this.serviceColors[index % this.serviceColors.length];
+    }
+}

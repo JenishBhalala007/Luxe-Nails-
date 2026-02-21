@@ -32,14 +32,14 @@ const getServiceById = async (req, res) => {
 // @route   POST /api/services
 // @access  Private/Admin
 const createService = async (req, res) => {
-    const { name, description, price, duration, category, imageUrl } = req.body;
+    const { name, description, priceRange, timeRange, category, imageUrl } = req.body;
 
     try {
         const service = await Service.create({
             name,
             description,
-            price,
-            duration,
+            priceRange,
+            timeRange,
             category,
             imageUrl
         });
@@ -53,7 +53,7 @@ const createService = async (req, res) => {
 // @route   PUT /api/services/:id
 // @access  Private/Admin
 const updateService = async (req, res) => {
-    const { name, description, price, duration, category, imageUrl } = req.body;
+    const { name, description, priceRange, timeRange, category, imageUrl } = req.body;
 
     try {
         const service = await Service.findById(req.params.id);
@@ -61,8 +61,8 @@ const updateService = async (req, res) => {
         if (service) {
             service.name = name || service.name;
             service.description = description || service.description;
-            service.price = price || service.price;
-            service.duration = duration || service.duration;
+            service.priceRange = priceRange || service.priceRange;
+            service.timeRange = timeRange || service.timeRange;
             service.category = category || service.category;
             service.imageUrl = imageUrl || service.imageUrl;
 

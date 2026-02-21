@@ -23,17 +23,13 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/auth/auth.routes').then(m => m.AUTH_ROUTES)
     },
     {
-        path: 'admin',
-        loadChildren: () => import('./pages/admin/admin.routes').then(m => m.ADMIN_ROUTES)
-    },
-    {
         path: 'client',
         loadChildren: () => import('./pages/client/client.routes').then(m => m.CLIENT_ROUTES)
     },
     {
-        path: 'worker',
+        path: 'artist',
         canActivate: [AuthGuard], // Add RoleGuard here later
-        loadChildren: () => import('./pages/worker/worker.routes').then(m => m.WORKER_ROUTES)
+        loadChildren: () => import('./pages/artist/artist.routes').then(m => m.ARTIST_ROUTES)
     },
     {
         path: 'admin',
